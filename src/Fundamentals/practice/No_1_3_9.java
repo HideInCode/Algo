@@ -30,7 +30,7 @@ public class No_1_3_9 {
                 String val2 = valStack.pop();
                 String operChar = operStack.pop();
                 result = "(" + val2 + operChar + val1 + ")";
-                //注意要放回，方便下次拼接
+                //注意取出后要放回，方便下次拼接
                 valStack.push(result);
             } else {
                 valStack.push(curStr);
