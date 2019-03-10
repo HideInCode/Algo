@@ -1,7 +1,5 @@
 package Fundamentals.practice;
 
-import java.util.Objects;
-
 class CycleQueue<T> {
     private Node first;
     private Node last;
@@ -16,18 +14,6 @@ class CycleQueue<T> {
         Node next;
 
 
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Node node = (Node) o;
-            return item.hashCode() == node.item.hashCode() && node.hashCode() == node.next.hashCode();
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(item, next);
-        }
     }
 
     public boolean isEmpty() {
@@ -50,15 +36,6 @@ class CycleQueue<T> {
             size++;
         }
     }
-
-//    @Override
-//    public String toString() {
-//        StringBuilder stringBuilder = new StringBuilder();
-//        for (Node curNode = first; curNode != null || curNode.equals(last); curNode = curNode.next) {
-//            stringBuilder.append(curNode.item + "\t");
-//        }
-//        return stringBuilder.toString();
-//    }
 
 
 }
