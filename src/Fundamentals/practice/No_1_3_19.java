@@ -135,6 +135,42 @@ class LinkedList<T> {
         //要不要断开放弃的链表
     }
 
+    public Node getFirstNode() {
+        return first;
+    }
+
+    public int max(Node firstNode) {
+        int max = 0;
+        if (firstNode == null) {
+            return 0;
+        }
+        if (isEmpty()) {
+            return max;
+        }
+        max = (int) firstNode.item;
+        for (Node curNode = firstNode; curNode != null; curNode = curNode.next) {
+            int curNum = (int) curNode.item;
+            if (curNum > max) {
+                max = curNum;
+            }
+        }
+        return max;
+    }
+
+    public int getMaxByRecur(Node first) {
+        if (first == null) {
+            return 0;
+        }
+        if (first.next == null) {
+            return (int) first.item;
+        }
+        int secondNum = getMaxByRecur(first.next);
+        int firstNum = (int) first.item;
+
+        return firstNum > secondNum ? firstNum : secondNum;
+
+    }
+
     public void remove(String key) {
         if (isEmpty()) {
             return;
@@ -158,25 +194,35 @@ public class No_1_3_19 {
         LinkedList<String> list = new LinkedList<>();
 
 
-        list.add("a");
+        list.add("1");
         list.add("a");
         list.add("b");
         list.add("c");
         list.add("d");
         list.add("e");
-        System.out.println(list.toString());
+//        System.out.println(list.toString());
 //        list.delete(2);
 //        System.out.println(list);
 //        System.out.println();
 //        LinkedList.Node node = list.search("c");
 //        list.removeAfter(node);
 //        System.out.println(list);
-        LinkedList.Node node = list.search("c");
-        LinkedList.Node newNode = list.new Node();
+//        LinkedList.Node node = list.search("c");
+//        LinkedList.Node newNode = list.new Node();
 //        newNode.item = "新节点";
 //        list.insertAfter(node, newNode);
 //        System.out.println(list);
-        list.remove("d");
-        System.out.println(list);
+//        list.remove("d");
+//        System.out.println(list);
+
+        LinkedList<Integer> integerLinkedList = new LinkedList<>();
+        integerLinkedList.add(1);
+        integerLinkedList.add(3);
+        integerLinkedList.add(4);
+        integerLinkedList.add(5);
+        integerLinkedList.add(90);
+
+        int max = integerLinkedList.getMaxByRecur(integerLinkedList.getFirstNode());
+        System.out.println(max);
     }
 }
