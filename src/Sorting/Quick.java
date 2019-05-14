@@ -58,7 +58,10 @@ public class Quick {
 
         Comparable partitionVal = a[low];
 
+        //冲第二个开始
         int leftIndex = low;
+
+        //从最左边开始
         int rightIndex = high + 1;
 
         while (true) {
@@ -76,7 +79,7 @@ public class Quick {
                 }
             }
 
-            //左右相遇,找到切点
+            //左右相遇,找到切点.此时leftIndex在右,rightIndex在左.
             if (leftIndex >= rightIndex) {
                 break;
             }
@@ -86,7 +89,7 @@ public class Quick {
             exch(a, leftIndex, rightIndex);
         }
 
-        //一定要返回右边的计数器啊,因为
+        //此时的leftIndex是比轴小,rightIndex比轴大.所以把小的和开头交换.
         exch(a, low, rightIndex);
         return rightIndex;
     }
