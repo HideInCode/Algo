@@ -1,6 +1,7 @@
 package Searching;
 
 import Fundamentals.api.Queue;
+import Fundamentals.imp.QueueByLinkedList;
 
 /**
  * 传说中的二叉查找树.
@@ -300,7 +301,7 @@ public class BST<Key extends Comparable<Key>, Value> {
     }
 
     public Iterable<Key> keys(Key low, Key high) {
-        Queue<Key> queue = new Queue<>();
+        Queue<Key> queue = new QueueByLinkedList<>();
         keys(root, queue, low, high);
         return queue;
     }
@@ -330,10 +331,10 @@ public class BST<Key extends Comparable<Key>, Value> {
     }
 
 
-    //todo 是否包含key
     public boolean contains(Key key) {
-        return false;
+        return get(key) != null;
     }
+
 
     public static void main(String[] args) {
         BST<String, String> bst = new BST<>();
@@ -347,6 +348,12 @@ public class BST<Key extends Comparable<Key>, Value> {
 
         bst.delete("a");
         System.out.println(bst.get("b"));
+
+        Iterable<String> keys = bst.keys();
+
+        for (String key : keys) {
+            System.out.println(key);
+        }
     }
 }
 
