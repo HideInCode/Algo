@@ -1,4 +1,4 @@
-package Graphs;
+package Graphs.UndirectedGraphs;
 
 import Fundamentals.api.Queue;
 import Fundamentals.imp.QueueByLinkedList;

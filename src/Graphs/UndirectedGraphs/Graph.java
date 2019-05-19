@@ -1,4 +1,4 @@
-package Graphs;
+package Graphs.UndirectedGraphs;
 
 import Fundamentals.imp.BagByLinkedList;
 import Fundamentals.utils.In;

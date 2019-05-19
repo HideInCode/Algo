@@ -1,4 +1,4 @@
-package Graphs;
+package Graphs.UndirectedGraphs;
 
 /**
  * 深度优先搜索

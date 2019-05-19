@@ -1,4 +1,4 @@
-package Graphs;
+package Graphs.UndirectedGraphs;
 
 /**
  * 有两种颜色,可以用这两种颜色让所有的相邻顶点颜色不同吗?

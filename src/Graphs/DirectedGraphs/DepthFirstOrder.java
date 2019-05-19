@@ -1,0 +1,60 @@
+package Graphs.DirectedGraphs;
+
+import Fundamentals.api.Queue;
+import Fundamentals.imp.QueueByLinkedList;
+
+import java.util.Stack;
+
+/**
+ * 深度优先排序
+ */
+public class DepthFirstOrder {
+    private boolean[] marked;
+
+    //前序: 在递归调用之前将顶点加入队列.
+    private Queue<Integer> pre;
+
+    //后序: 在递归调用之后将顶点加入队列.
+    private Queue<Integer> post;
+
+    //逆后序: 在递归调用之后将顶点压入栈.
+    private Stack<Integer> reversePost;
+
+    public DepthFirstOrder(Digraph G) {
+        pre = new QueueByLinkedList<>();
+        post = new QueueByLinkedList<>();
+        reversePost = new Stack<>();
+
+        marked = new boolean[G.V()];
+        for (int v = 0; v < G.V(); v++) {
+            if (!marked[v]) {
+                dfs(G, v);
+            }
+        }
+    }
+
+    private void dfs(Digraph G, int v) {
+        marked[v] = true;
+        pre.enqueue(v);
+
+        for (Integer w : G.adj(v)) {
+            if (!marked[w]) {
+                dfs(G, w);
+            }
+        }
+        post.enqueue(v);
+        reversePost.push(v);
+    }
+
+    public Iterable<Integer> pre() {
+        return pre;
+    }
+
+    public Iterable<Integer> post() {
+        return post;
+    }
+
+    public Iterable<Integer> reversePost() {
+        return reversePost;
+    }
+}

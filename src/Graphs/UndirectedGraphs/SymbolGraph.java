@@ -1,4 +1,4 @@
-package Graphs;
+package Graphs.UndirectedGraphs;
 
 import Fundamentals.utils.In;
 import Searching.BST;
@@ -8,7 +8,7 @@ import Searching.BST;
  * 符号图
  * 1.顶点名字为字符串
  * 2.用指定分隔符隔开定点名
- * 3.每一行都是一组边的 集合,每一条边都连接着这一行的第一个名称表示的顶点和其他所表示的顶点
+ * 3.每一行都是一组边,每一条边都连接着这一行的第一个名称表示的顶点和其他所表示的顶点
  * 4.顶点总数V和边的总数E都是隐式定义.
  */
 public class SymbolGraph {
@@ -58,7 +58,7 @@ public class SymbolGraph {
 
             //将每一行的第一个顶点和改行的其他顶点相连.
             int v = st.get(a[0]);
-            for (int i = 0; i < a.length; i++) {
+            for (int i = 1; i < a.length; i++) {
                 graph.addEdge(v, st.get(a[i]));
             }
         }
