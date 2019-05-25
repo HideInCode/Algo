@@ -1,6 +1,6 @@
 # 算法（第4版）
 
-> 答案,15-30分钟想不出来思路,就看答案吧,这么久想不出来,就是不会.
+> 15-30分钟想不出来思路,就看答案吧,这么久想不出来,就是不会.
 >
 > [官方网站](http://algs4.cs.princeton.edu/home/) [官方代码下载](http://algs4.cs.princeton.edu/code/algs4.jar) [官方测试数据下载](http://algs4.cs.princeton.edu/code/algs4-data.zip)
 
