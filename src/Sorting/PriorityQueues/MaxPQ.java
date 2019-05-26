@@ -1,8 +1,8 @@
-package Sorting;
+package Sorting.PriorityQueues;
 
 
 /**
- * k表示当前节点也是在数组中的索引,父节点为k/2取左,子节点为k*2取右.
+ * 优先队列
  *
  * @param <Key>
  */
@@ -15,6 +15,7 @@ public class MaxPQ<Key extends Comparable<Key>> {
     private int N = 0;
 
     public MaxPQ() {
+        this(10);
     }
 
     public MaxPQ(int max) {
@@ -22,11 +23,26 @@ public class MaxPQ<Key extends Comparable<Key>> {
     }
 
     public MaxPQ(Key[] a) {
+        pq = a;
     }
 
     void insert(Key v) {
+        if (N >= pq.length / 2) {
+            resize();
+        }
         pq[++N] = v;
         swim(N);
+    }
+
+    //数组扩容
+    private void resize() {
+
+        Key[] temp = (Key[]) new Object[pq.length * 2];
+        for (int i = 0; i < temp.length; i++) {
+            temp[i] = pq[i];
+        }
+
+        pq = temp;
     }
 
     public Key max() {
@@ -47,7 +63,7 @@ public class MaxPQ<Key extends Comparable<Key>> {
 
     public boolean isEmpty() {
 
-        return false;
+        return N == 0;
     }
 
     public int size() {
@@ -160,5 +176,7 @@ public class MaxPQ<Key extends Comparable<Key>> {
         for (String string : strings) {
             System.out.println(string);
         }
+        maxPQ.insert("asdf");
+        System.out.println(maxPQ.isEmpty());
     }
 }

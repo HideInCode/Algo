@@ -2,6 +2,8 @@ package Graphs.DirectedGraphs;
 
 import Fundamentals.api.Queue;
 import Fundamentals.imp.QueueByLinkedList;
+import Graphs.ShortestPaths.DirectedEdge;
+import Graphs.ShortestPaths.EdgeWeightedDigraph;
 
 import java.util.Stack;
 
@@ -20,6 +22,13 @@ public class DepthFirstOrder {
     //逆后序: 在递归调用之后将顶点压入栈.
     private Stack<Integer> reversePost;
 
+    //前序计数器
+    private int preCounter;
+
+    //后序计数器
+    private int postCouter;
+
+
     public DepthFirstOrder(Digraph G) {
         pre = new QueueByLinkedList<>();
         post = new QueueByLinkedList<>();
@@ -31,6 +40,31 @@ public class DepthFirstOrder {
                 dfs(G, v);
             }
         }
+    }
+
+    public DepthFirstOrder(EdgeWeightedDigraph G) {
+        pre = new QueueByLinkedList<>();
+        post = new QueueByLinkedList<>();
+        reversePost = new Stack<>();
+
+        marked = new boolean[G.V()];
+        for (int v = 0; v < G.V(); v++) {
+            if (!marked[v]) {
+                dfs(G, v);
+            }
+        }
+    }
+
+    private void dfs(EdgeWeightedDigraph G, int v) {
+        marked[v] = true;
+        pre.enqueue(v);
+        for (DirectedEdge e : G.adj(v)) {
+            if (!marked[e.to()]) {
+                dfs(G, e.to());
+            }
+        }
+        post.enqueue(v);
+        reversePost.push(v);
     }
 
     private void dfs(Digraph G, int v) {
