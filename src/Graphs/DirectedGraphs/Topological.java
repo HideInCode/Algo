@@ -1,10 +1,12 @@
 package Graphs.DirectedGraphs;
 
 import Fundamentals.utils.StdOut;
+import Graphs.ShortestPaths.EdgeWeightedDigraph;
+import Graphs.ShortestPaths.EdgeWeightedDirectedCycle;
 import Graphs.UndirectedGraphs.DirectedCycle;
 
 /**
- * 拓扑排序
+ * 拓扑排序 有向无环图的逆序就是拓扑排序
  * 拓扑是研究几何图形或空间在连续 改变形状后还能保持不变的一些性质的一个学科.
  * 只考虑物体间的位置关系,不考虑他们的形状和大小.
  */
@@ -21,8 +23,20 @@ public class Topological {
         }
     }
 
+    public Topological(EdgeWeightedDigraph G) {
+        EdgeWeightedDirectedCycle cycleFinder = new EdgeWeightedDirectedCycle(G);
+        if (!cycleFinder.hasCycle()) {
+            DepthFirstOrder dfs = new DepthFirstOrder(G);
+            order = dfs.reversePost();
+        }
+    }
+
     //是个无向环图吗
     public boolean isDAG() {
+        return hasOrder();
+    }
+
+    public boolean hasOrder() {
         return order != null;
     }
 
