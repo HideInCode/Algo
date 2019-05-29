@@ -21,7 +21,6 @@ public class Arbitrage {
         EdgeWeightedDigraph G = new EdgeWeightedDigraph(V);
         for (int v = 0; v < V; v++) {
             name[v] = StdIn.readString();
-            System.out.println(name[v]);
             for (int w = 0; w < V; w++) {
                 double rate = StdIn.readDouble();
                 DirectedEdge e = new DirectedEdge(v, w, -Math.log(rate));
@@ -31,7 +30,6 @@ public class Arbitrage {
 
         //找出负权重环
         BellmanFordSP spt = new BellmanFordSP(G, 0);
-        System.out.println(spt.hasNegativeCycle());
         if (spt.hasNegativeCycle()) {
             double stake = 1000.0;
             for (DirectedEdge e : spt.negativeCycle()) {
