@@ -3,7 +3,7 @@ package Sorting;
 public class BubbleSort extends IntegerArraysSortTemplate {
 
     @Override
-    protected void sort(int[] arr) {
+    public void sort(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length - 1 - i; j++) {
                 if (less(arr[j + 1], arr[j])) {

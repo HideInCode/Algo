@@ -2,7 +2,7 @@ package Sorting;
 
 public class Shell extends IntegerArraysSortTemplate {
     @Override
-    protected void sort(int[] arr) {
+    public void sort(int[] arr) {
         int h = 1;
         while (h < (arr.length / 3)) {
             h = h * 3 + 1;

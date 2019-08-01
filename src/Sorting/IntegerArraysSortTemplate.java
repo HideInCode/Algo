@@ -6,7 +6,7 @@ import java.util.Random;
 public abstract class IntegerArraysSortTemplate {
 
 
-    protected abstract void sort(int[] arr);
+    public abstract void sort(int[] arr);
 
     protected boolean less(int a, int b) {
         return a < b;
