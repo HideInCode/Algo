@@ -4,7 +4,7 @@ import Fundamentals.api.Queue;
 
 import java.util.Iterator;
 
-public class QueueByLinkedList<T> extends Queue<T> {
+public class QueueByLinkedList<T> implements Queue<T> {
 
     private Node first;
     private Node last;

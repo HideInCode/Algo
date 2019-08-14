@@ -3,6 +3,7 @@ package Graphs.ShortestPaths;
 import Fundamentals.api.Queue;
 import Fundamentals.api.Stack;
 import Fundamentals.imp.QueueByLinkedList;
+import Fundamentals.imp.StackByLinkedList;
 import Fundamentals.utils.In;
 import Fundamentals.utils.StdOut;
 
@@ -68,7 +69,7 @@ public class BellmanFordSP {
         if (!hasPathTo(v)) {
             return null;
         }
-        Stack<DirectedEdge> path = new Stack<>();
+        Stack<DirectedEdge> path = new StackByLinkedList<>();
         for (DirectedEdge e = edgeTo[v]; e != null; e = edgeTo[e.from()]) {
             path.push(e);
         }

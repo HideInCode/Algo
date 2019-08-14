@@ -1,6 +1,7 @@
 package Graphs.ShortestPaths;
 
 import Fundamentals.api.Stack;
+import Fundamentals.imp.StackByLinkedList;
 import Graphs.DirectedGraphs.Topological;
 
 /**
@@ -50,7 +51,7 @@ public class AcyclicSP {
         if (!hasPathTo(v)) {
             return null;
         }
-        Stack<DirectedEdge> path = new Stack<>();
+        Stack<DirectedEdge> path = new StackByLinkedList<>();
         for (DirectedEdge e = edgeTo[v]; e != null; e = edgeTo[e.from()]) {
             path.push(e);
         }

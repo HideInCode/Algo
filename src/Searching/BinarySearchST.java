@@ -1,6 +1,7 @@
 package Searching;
 
 import Fundamentals.api.Queue;
+import Fundamentals.imp.QueueByLinkedList;
 
 public class BinarySearchST<K extends Comparable<K>, V> {
 
@@ -153,7 +154,7 @@ public class BinarySearchST<K extends Comparable<K>, V> {
     }
 
     public Iterable<K> keys(K low, K high) {
-        Queue<K> queue = new Queue<>();
+        Queue<K> queue = new QueueByLinkedList<>();
 
         for (int i = rank(low); i < rank(high); i++) {
             queue.enqueue(keys[i]);

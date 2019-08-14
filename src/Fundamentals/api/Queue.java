@@ -2,25 +2,15 @@ package Fundamentals.api;
 
 import java.util.Iterator;
 
-public class Queue<T> implements Iterable<T> {
+public interface Queue<T> extends Iterable<T> {
     @Override
-    public Iterator<T> iterator() {
-        return null;
-    }
+    public Iterator<T> iterator();
 
-    public void enqueue(T t) {
+    public void enqueue(T t);
 
-    }
+    public T dequeue();
 
-    public T dequeue() {
-        return null;
-    }
+    public boolean isEmpty();
 
-    public boolean isEmpty() {
-        return false;
-    }
-
-    public int size() {
-        return 0;
-    }
+    public int size();
 }

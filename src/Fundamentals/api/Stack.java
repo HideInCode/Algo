@@ -2,26 +2,15 @@ package Fundamentals.api;
 
 import java.util.Iterator;
 
-public class Stack<T> implements Iterable<T> {
+public interface Stack<T> extends Iterable<T> {
     @Override
-    public Iterator<T> iterator() {
-        return null;
-    }
+    public Iterator<T> iterator();
 
-    public void push(T t) {
+    public void push(T t);
 
+    public T pop();
 
-    }
+    public boolean isEmpty();
 
-    public T pop() {
-        return null;
-    }
-
-    public boolean isEmpty() {
-        return false;
-    }
-
-    public int size() {
-        return 0;
-    }
+    public int size();
 }

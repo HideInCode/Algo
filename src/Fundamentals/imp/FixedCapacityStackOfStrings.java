@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 //使用数组实现一个定容的字符串stack
 
-public class FixedCapacityStackOfStrings extends Stack {
+public class FixedCapacityStackOfStrings implements Stack {
     private String[] strArr;
     private int size;
 
@@ -18,9 +18,23 @@ public class FixedCapacityStackOfStrings extends Stack {
         return size == strArr.length;
     }
 
+    private class MyIterator implements Iterator {
+        int temp = size;
+
+        @Override
+        public boolean hasNext() {
+            return temp > 0;
+        }
+
+        @Override
+        public Object next() {
+            return strArr[temp--];
+        }
+    }
+
     @Override
     public Iterator iterator() {
-        return super.iterator();
+        return new MyIterator();
     }
 
     @Override
@@ -44,11 +58,21 @@ public class FixedCapacityStackOfStrings extends Stack {
     }
 
     public static void main(String[] args) {
-        FixedCapacityStackOfStrings fixedCapacityStackOfStrings = new FixedCapacityStackOfStrings(100);
-        fixedCapacityStackOfStrings.push("hello");
-        fixedCapacityStackOfStrings.push("world");
-        System.out.println(fixedCapacityStackOfStrings.size());
-        boolean empty = fixedCapacityStackOfStrings.isEmpty();
+        FixedCapacityStackOfStrings stack = new FixedCapacityStackOfStrings(100);
+        stack.push("hello");
+        stack.push("world");
+
+
+        System.out.println(stack.size());
+        stack.pop();
+        System.out.println(stack.size());
+
+        boolean empty = stack.isEmpty();
         System.out.println(empty);
+
+        for (Object string : stack) {
+            System.out.println(string);
+        }
+
     }
 }

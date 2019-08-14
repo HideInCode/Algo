@@ -1,29 +1,29 @@
 package Sorting;
 
-public class Example {
-    public static void sort(Comparable[] comparables) {
-
-    }
+public abstract class Sort {
 
 
-    public static boolean less(Comparable v, Comparable w) {
-        //v-w<0
+    public abstract void sort(Comparable[] comparables);
+
+
+    public boolean less(Comparable v, Comparable w) {
         return v.compareTo(w) < 0;
     }
 
-    public static void exch(Comparable[] a, int i, int j) {
+    public void exch(Comparable[] a, int i, int j) {
         Comparable temp = a[i];
         a[i] = a[j];
         a[j] = temp;
     }
 
-    public static void show(Comparable[] comparables) {
+    public void show(Comparable[] comparables) {
         for (Comparable comparable : comparables) {
-            System.out.println(comparable);
+            System.out.print(comparable + "\t");
         }
+        System.out.println();
     }
 
-    public static boolean isSorted(Comparable[] comparables) {
+    public boolean isSorted(Comparable[] comparables) {
 
         boolean isSorted = true;
         for (int i = 0; i < comparables.length - 1; i++) {
@@ -36,7 +36,7 @@ public class Example {
     }
 
 
-    public static int countUnique(Comparable[] comparables) {
+    public int countUnique(Comparable[] comparables) {
         int result = 1;
 
         for (int i = 1; i < comparables.length; i++) {
@@ -55,7 +55,7 @@ public class Example {
      * @param k k
      * @return 目标元素
      */
-    public static Comparable select(Comparable[] a, int k) {
+    public Comparable select(Comparable[] a, int k) {
 
 
         int low = 0;
@@ -76,7 +76,7 @@ public class Example {
     }
 
 
-    private static int partition(Comparable[] a, int low, int high) {
+    private int partition(Comparable[] a, int low, int high) {
         Comparable pivot = a[low];
 
         int leftIndex = low;
@@ -110,4 +110,9 @@ public class Example {
         return rightIndex;
     }
 
+    protected String[] getRandStrings() {
+
+        String str = "asfjsaopf";
+        return str.split("");
+    }
 }

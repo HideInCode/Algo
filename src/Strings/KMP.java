@@ -27,6 +27,8 @@ public class KMP {
         //开始构造一个dfa 这个算法的核心
         dfa = new int[R][pat.length()];
         dfa[pat.charAt(0)][0] = 1;//第一位匹配时,下一状态一定是1
+
+        //两个指针同时开始移动
         for (int initIndex = 0, patIndex = 1; patIndex < pat.length(); patIndex++) {
 
             //匹配失败,已经匹配过的状态保留

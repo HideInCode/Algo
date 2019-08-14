@@ -1,6 +1,8 @@
-package Sorting;
+package Sorting.divideAndConquer;
 
-public class MergeBU {
+import Sorting.Sort;
+
+public class MergeBU extends Sort {
 
     Comparable[] aux;
 
@@ -29,6 +31,7 @@ public class MergeBU {
         }
     }
 
+    @Override
     public void sort(Comparable[] comparables) {
         aux = new Comparable[comparables.length];
 
@@ -42,20 +45,10 @@ public class MergeBU {
         }
     }
 
-    private boolean less(Comparable a, Comparable b) {
-        int result = a.compareTo(b);
-
-
-        return result == -1 ? true : false;
-    }
-
     public static void main(String[] args) {
         String[] strings = new String[]{"d", "c", "b", "a"};
         MergeBU mergeBU = new MergeBU();
         mergeBU.sort(strings);
-
-        for (String string : strings) {
-            System.out.println(string);
-        }
+        mergeBU.show(strings);
     }
 }

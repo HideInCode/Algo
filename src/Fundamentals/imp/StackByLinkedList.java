@@ -10,7 +10,7 @@ import java.util.Iterator;
  * 2.使用Node存数据要见建立node
  * 3.更新curNode
  */
-public class StackByLinkedList<T> extends Stack<T> {
+public class StackByLinkedList<T> implements Stack<T> {
     private Node curNode;
     private int size;
 
@@ -27,7 +27,7 @@ public class StackByLinkedList<T> extends Stack<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return super.iterator();
+        return null;
     }
 
     //新的元素应该找上个元素,不该去找第一个,所以把上个元素变成第一个

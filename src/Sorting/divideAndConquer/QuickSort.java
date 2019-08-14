@@ -1,15 +1,14 @@
-package Sorting;
+package Sorting.divideAndConquer;
+
+import Sorting.Sort;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static Sorting.Example.exch;
-import static Sorting.Example.less;
+public class QuickSort extends Sort {
 
-public class Quick {
-
-    private static boolean shuffleArray(Comparable[] comparables) {
+    private boolean shuffleArray(Comparable[] comparables) {
         List<Comparable> comparableList = Arrays.asList(comparables);
 
         Collections.shuffle(comparableList);
@@ -21,14 +20,15 @@ public class Quick {
         return comparables.length == comparableList.size();
     }
 
-    public static void sort(Comparable[] comparables) {
+    @Override
+    public void sort(Comparable[] comparables) {
 
         shuffleArray(comparables);
         sort(comparables, 0, comparables.length - 1);
 
     }
 
-    private static void sort(Comparable[] a, int low, int high) {
+    private void sort(Comparable[] a, int low, int high) {
 
         if (low >= high) {
             return;
@@ -54,7 +54,7 @@ public class Quick {
      * @param high 最大下标
      * @return 轴的下标
      */
-    private static int getPivotIndex(Comparable[] a, int low, int high) {
+    private int getPivotIndex(Comparable[] a, int low, int high) {
 
         Comparable partitionVal = a[low];
 
@@ -100,7 +100,7 @@ public class Quick {
         String[] strings = new String[]{"d", "c", "b", "a"};
 
 
-        sort(strings);
+        new QuickSort().sort(strings);
 
         Arrays.stream(strings).forEach(System.out::println);
 

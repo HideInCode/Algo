@@ -1,5 +1,6 @@
 package Fundamentals.practice;
 
+import Fundamentals.api.Queue;
 import Fundamentals.imp.QueueByLinkedList;
 
 /**
@@ -7,7 +8,7 @@ import Fundamentals.imp.QueueByLinkedList;
  */
 public class No_1_3_15 {
     public static String getReverseIndex(String string, int k) {
-        QueueByLinkedList<String> queue = new QueueByLinkedList<>();
+        Queue<String> queue = new QueueByLinkedList<>();
         String[] strings = string.split("");
         for (String s : strings) {
             queue.enqueue(s);

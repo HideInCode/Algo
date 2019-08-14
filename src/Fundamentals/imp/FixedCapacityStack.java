@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 //使用泛型实现定容栈,使用迭代器模式
-public class FixedCapacityStack<T> extends Stack<T> {
+public class FixedCapacityStack<T> implements Stack<T> {
     private T[] tArr;
     private int size;
 

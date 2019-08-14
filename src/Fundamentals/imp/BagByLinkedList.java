@@ -9,7 +9,7 @@ import java.util.Iterator;
  *
  * @param <T>
  */
-public class BagByLinkedList<T> extends Bag<T> {
+public class BagByLinkedList<T> implements Bag<T> {
     private Node first;
     private int size;
 

@@ -1,6 +1,6 @@
 package Strings;
 
-import Sorting.InsertSort;
+import Sorting.easysort.InsertSort;
 
 import java.util.Arrays;
 
@@ -29,7 +29,7 @@ public class MSD {
 
     private static void sort(String[] a, int low, int high, int d) {
         if (high <= low + M) {
-            InsertSort.sort(a, low, high, d);
+            new InsertSort().sort(a);
             return;
         }
         int[] count = new int[R + 2];

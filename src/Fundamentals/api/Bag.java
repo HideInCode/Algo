@@ -2,21 +2,13 @@ package Fundamentals.api;
 
 import java.util.Iterator;
 
-public class Bag<T> implements Iterable<T> {
+public interface Bag<T> extends Iterable<T> {
     @Override
-    public Iterator<T> iterator() {
-        return null;
-    }
+    public Iterator<T> iterator();
 
-    public void add(T t) {
+    public void add(T t);
 
-    }
+    public boolean isEmpty();
 
-    public boolean isEmpty() {
-        return false;
-    }
-
-    public int size() {
-        return 0;
-    }
+    public int size();
 }
