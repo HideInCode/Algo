@@ -1,4 +1,4 @@
-package Strings;
+package Strings.search;
 
 /**
  * 解决问题:提高查找性能

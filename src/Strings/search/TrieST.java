@@ -1,4 +1,4 @@
-package Strings;
+package Strings.search;
 
 import java.util.LinkedList;
 import java.util.Queue;

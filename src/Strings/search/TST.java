@@ -1,4 +1,4 @@
-package Strings;
+package Strings.search;
 
 /**
  * 三向单词查找树

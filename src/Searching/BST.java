@@ -55,22 +55,6 @@ public class BST<Key extends Comparable<Key>, Value> {
 
     }
 
-
-    private Value get(Node x, Key key) {
-        if (x == null) {
-            return null;
-        }
-
-        int cmp = key.compareTo(x.key);
-        if (cmp < 0) {
-            return get(x.left, key);
-        } else if (cmp > 0) {
-            return get(x.right, key);
-        } else {
-            return x.val;
-        }
-    }
-
     private Node put(Node x, Key key, Value value) {
         //存在就更新,不存在就新建.
         if (x == null) {
@@ -90,6 +74,23 @@ public class BST<Key extends Comparable<Key>, Value> {
 
         return x;
     }
+
+
+    private Value get(Node x, Key key) {
+        if (x == null) {
+            return null;
+        }
+
+        int cmp = key.compareTo(x.key);
+        if (cmp < 0) {
+            return get(x.left, key);
+        } else if (cmp > 0) {
+            return get(x.right, key);
+        } else {
+            return x.val;
+        }
+    }
+
 
     public Key min() {
         return min(root).key;

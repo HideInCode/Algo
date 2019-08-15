@@ -1,4 +1,4 @@
-package Strings;
+package Strings.sort;
 
 /**
  * 解决相同字符开头的多个字符串的排序问题

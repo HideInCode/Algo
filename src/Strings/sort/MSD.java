@@ -1,4 +1,4 @@
-package Strings;
+package Strings.sort;
 
 import Sorting.easysort.InsertSort;
 

@@ -1,4 +1,4 @@
-package Strings;
+package Strings.search;
 
 public class SimpleSearch {
 

@@ -1,4 +1,4 @@
-package Strings;
+package Strings.search;
 
 /**
  * Knuth-Morris-Pratt算法
