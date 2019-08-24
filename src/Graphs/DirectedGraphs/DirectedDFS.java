@@ -6,8 +6,9 @@ import Fundamentals.utils.In;
 import Fundamentals.utils.StdOut;
 
 /**
- * 可达性
- * 顺藤摸瓜
+ * 利用深度优先遍历,提供一个检测有向图-------可达性接口marked(int v);
+ * 数据结构:有向图
+ * 算法:深度优先遍历
  */
 public class DirectedDFS {
     private boolean[] marked;
@@ -16,11 +17,11 @@ public class DirectedDFS {
      * 在digraph中找到s所有能去的点
      *
      * @param digraph 在这个图中找
-     * @param s       一个顶点
+     * @param v       起始顶点
      */
-    public DirectedDFS(Digraph digraph, int s) {
+    public DirectedDFS(Digraph digraph, int v) {
         marked = new boolean[digraph.V()];
-        dfs(digraph, s);
+        dfs(digraph, v);
     }
 
 

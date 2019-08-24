@@ -11,6 +11,7 @@ public class Digraph {
     private final int V;
 
     private int E;
+
     private Bag<Integer>[] adj;
 
 
@@ -58,11 +59,11 @@ public class Digraph {
     /**
      * 向有向图中添加一条边v->w
      *
-     * @param v
-     * @param w
+     * @param from
+     * @param to
      */
-    public void addEdge(int v, int w) {
-        adj[v].add(w);
+    public void addEdge(int from, int to) {
+        adj[from].add(to);
         E++;
     }
 

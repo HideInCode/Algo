@@ -62,6 +62,17 @@ public class BagByLinkedList<T> implements Bag<T> {
     public int size() {
         return size;
     }
+    
+    @Override
+    public String toString() {
+        
+        String result = "";
+        for (Node curNode = first; curNode != null; curNode = curNode.next) {
+            result += curNode.item;
+        }
+        
+        return result;
+    }
 
     public static void main(String[] args) {
         BagByLinkedList<String> bag = new BagByLinkedList<>();

@@ -6,6 +6,7 @@ import java.util.Stack;
 
 /**
  * 迪杰斯特拉算法
+ * 求非负加权有向图的最短路径问题
  */
 public class DijkstraSP {
     private DirectedEdge[] edgeTo;

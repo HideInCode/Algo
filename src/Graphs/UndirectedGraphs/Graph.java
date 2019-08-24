@@ -4,7 +4,7 @@ import Fundamentals.imp.BagByLinkedList;
 import Fundamentals.utils.In;
 
 /**
- * 图 我们为每个顶点标上序号,当做唯一标记.
+ * 图 我们为每个顶点标上序号,做数组下标.也可以看做ID
  * edge 边
  * vertex 顶点
  * adjacency 邻接
