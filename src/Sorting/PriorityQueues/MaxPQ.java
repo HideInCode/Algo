@@ -176,7 +176,7 @@ public class MaxPQ<Key extends Comparable<Key>> {
         for (String string : strings) {
             System.out.println(string);
         }
-        maxPQ.insert("asdf");
+        maxPQ.insert("p100-.125K");
         System.out.println(maxPQ.isEmpty());
     }
 }
