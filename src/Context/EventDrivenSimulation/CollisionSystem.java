@@ -1,4 +1,4 @@
-package Context;
+package Context.EventDrivenSimulation;
 
 import Fundamentals.utils.StdDraw;
 import Sorting.PriorityQueues.MinPQ;
