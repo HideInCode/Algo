@@ -1,4 +1,4 @@
-package Fundamentals.practice;
+package Fundamentals.practice.bag_queue_stack;
 
 //反转链表,链表一定要画图
 public class No_1_3_30<T> {

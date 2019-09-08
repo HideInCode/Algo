@@ -1,4 +1,4 @@
-package Fundamentals.practice;
+package Fundamentals.practice.bag_queue_stack;
 
 /**
  * 线性表之链表练习

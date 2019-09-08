@@ -13,33 +13,31 @@ import java.util.Iterator;
 public class StackByLinkedList<T> implements Stack<T> {
     private Node curNode;
     private int size;
-
+    
     private class Node {
         T data;
-
-        //递归才是链表的根本
         Node next;
+        
+        public Node(T data, Node next) {
+            this.data = data;
+            this.next = next;
+        }
     }
-
-    public StackByLinkedList() {
-        curNode = new Node();
-    }
-
+    
+    
     @Override
     public Iterator<T> iterator() {
         return null;
     }
-
+    
     //新的元素应该找上个元素,不该去找第一个,所以把上个元素变成第一个
     @Override
     public void push(T t) {
-        Node before = new Node();
-        before.data = t;
-        before.next = curNode;
+        Node before = new Node(t, curNode);
         curNode = before;
         size++;
     }
-
+    
     @Override
     public T pop() {
         T result = null;
@@ -50,22 +48,22 @@ public class StackByLinkedList<T> implements Stack<T> {
         size--;
         return result;
     }
-
+    
     @Override
     public boolean isEmpty() {
         return size == 0;
     }
-
+    
     @Override
     public int size() {
         return size;
     }
-
+    
     public static void main(String[] args) {
-        StackByLinkedList stackByLinkedList = new StackByLinkedList();
+        StackByLinkedList<String> stackByLinkedList = new StackByLinkedList<>();
         stackByLinkedList.push("hello");
         stackByLinkedList.push("world");
-        Object pop = stackByLinkedList.pop();
+        String pop = stackByLinkedList.pop();
         System.out.println(pop);
     }
 }

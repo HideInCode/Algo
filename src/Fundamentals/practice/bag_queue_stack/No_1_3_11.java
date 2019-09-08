@@ -1,4 +1,4 @@
-package Fundamentals.practice;
+package Fundamentals.practice.bag_queue_stack;
 
 import Fundamentals.imp.FixedCapacityStack;
 

@@ -87,7 +87,7 @@ public class QueueByLinkedList<T> implements Queue<T> {
 
         }
         for (String o : queueByLinkedList) {
-            System.out.println(o);
+            System.out.print(o+"\t");
         }
 //        System.out.println(queueByLinkedList.size() + " left on queue");
     }

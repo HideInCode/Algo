@@ -12,26 +12,31 @@ import java.util.Iterator;
 public class BagByLinkedList<T> implements Bag<T> {
     private Node first;
     private int size;
-
+    
     private class Node {
         T item;
         Node next;
+        
+        public Node(T item, Node next) {
+            this.item = item;
+            this.next = next;
+        }
     }
-
+    
     @Override
     public Iterator<T> iterator() {
         return new BagIterator<T>();
     }
-
+    
     private class BagIterator<E> implements Iterator<T> {
-        //把first指向对象的地址复制一份给curNode
+        //新建个是指针指向首节点
         private Node curNode = first;
-
+        
         @Override
         public boolean hasNext() {
             return curNode != null;
         }
-
+        
         @Override
         public T next() {
             if (curNode == null) {
@@ -42,22 +47,20 @@ public class BagByLinkedList<T> implements Bag<T> {
             return result;
         }
     }
-
+    
     //压栈
     @Override
     public void add(T t) {
         Node oldFirst = first;
-        first = new Node();
-        first.item = t;
-        first.next = oldFirst;
+        first = new Node(t, oldFirst);
         size++;
     }
-
+    
     @Override
     public boolean isEmpty() {
         return size == 0;
     }
-
+    
     @Override
     public int size() {
         return size;
@@ -66,14 +69,14 @@ public class BagByLinkedList<T> implements Bag<T> {
     @Override
     public String toString() {
         
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (Node curNode = first; curNode != null; curNode = curNode.next) {
-            result += curNode.item;
+            result.append(curNode.item);
         }
         
-        return result;
+        return result.toString();
     }
-
+    
     public static void main(String[] args) {
         BagByLinkedList<String> bag = new BagByLinkedList<>();
         bag.add("a");

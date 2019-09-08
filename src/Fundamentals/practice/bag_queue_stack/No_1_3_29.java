@@ -1,4 +1,4 @@
-package Fundamentals.practice;
+package Fundamentals.practice.bag_queue_stack;
 
 class CycleQueue<T> {
     private Node first;
