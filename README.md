@@ -7,14 +7,14 @@
 
 ## 目录
 
-### 第1章 [基础](#Fundamentals)
+### 第1章 [基础](https://github.com/HideInCode/Algorithms/tree/master/src/Fundamentals)
 
-### 第2章 排序
+### 第2章 [排序](https://github.com/HideInCode/Algorithms/tree/master/src/Sorting)
 
-### 第3章 查找
+### 第3章 [查找](https://github.com/HideInCode/Algorithms/tree/master/src/Searching)
 
-### 第4章 图
+### 第4章 [图](https://github.com/HideInCode/Algorithms/tree/master/src/Graphs)
 
-### 第5章 字符串
+### 第5章 [字符串](https://github.com/HideInCode/Algorithms/tree/master/src/Strings)
 
-### 第6章 背景
+### 第6章 [背景](https://github.com/HideInCode/Algorithms/tree/master/src/Context)
