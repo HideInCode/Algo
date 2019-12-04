@@ -7,7 +7,7 @@
 
 ## 目录
 
-### 第1章 [基础](https://github.com/HideInCode/Algorithms/tree/master/src/Context)
+### 第1章 [基础](#Fundamentals)
 
 ### 第2章 排序
 
