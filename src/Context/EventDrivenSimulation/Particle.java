@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * 运动的粒子对象
  */
-public class Particle {
+public class  Particle {
     private static final double INFINITY = Double.POSITIVE_INFINITY;
     
     //位置

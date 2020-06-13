@@ -5,32 +5,31 @@ import Sorting.Sort;
 public class Quick3Way extends Sort {
 
     private void sort(Comparable[] a, int low, int high) {
-        if (high <= low) {
+        if (low >= high) {
             return;
         }
-
-        int lowIndex = low;
-        int equalIndex = low + 1;
-        int highIndex = high;
-
-        Comparable val = a[low];
-        while (equalIndex <= highIndex) {
-            int cmp = a[equalIndex].compareTo(val);
-
-            if (cmp < 0) {//如果相等的比低位小
-                exch(a, lowIndex++, equalIndex++);
+    
+        int left = low;
+        int right = high;
+        int cur = low + 1;
+        Comparable pivot = a[low];
+        while (cur <= right) {
+            int cmp = a[cur].compareTo(pivot);
+            if (cmp < 0) {
+                exch(a, cur, left);
+                left++;
+                
             } else if (cmp > 0) {
-                exch(a, equalIndex, highIndex--);
+                exch(a, cur, right);
+                right--;
+                cur--;
             } else {
-                equalIndex++;
+                cur++;
             }
         }
-
-        sort(a, low, lowIndex - 1);
-
-        sort(a, highIndex + 1, high);
+        sort(a, low, left - 1);
+        sort(a, right + 1, high);
     }
-
 
     @Override
     public void sort(Comparable[] comparables) {

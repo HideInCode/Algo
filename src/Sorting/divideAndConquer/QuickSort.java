@@ -3,108 +3,75 @@ package Sorting.divideAndConquer;
 import Sorting.Sort;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class QuickSort extends Sort {
-
-    private boolean shuffleArray(Comparable[] comparables) {
-        List<Comparable> comparableList = Arrays.asList(comparables);
-
-        Collections.shuffle(comparableList);
-
-        for (int i = 0; i < comparables.length; i++) {
-            comparables[i] = comparableList.get(i);
-        }
-
-        return comparables.length == comparableList.size();
-    }
-
     @Override
-    public void sort(Comparable[] comparables) {
-
-        shuffleArray(comparables);
-        sort(comparables, 0, comparables.length - 1);
-
+    public void sort(Comparable[] a) {
+        sort(a, 0, a.length - 1);
     }
-
-    private void sort(Comparable[] a, int low, int high) {
-
-        if (low >= high) {
+    
+    private void sort(Comparable[] a, int lo, int hi) {
+        if (lo >= hi) {
             return;
         }
-        int pivotIndex = getPivotIndex(a, low, high);
-
-        sort(a, low, pivotIndex - 1);
-        sort(a, pivotIndex + 1, high);
+        int pivot = partition(a, lo, hi);
+        sort(a, lo, pivot - 1);
+        sort(a, pivot + 1, hi);
     }
-
-
-    /**
-     * 找轴的坐标
-     * 0.找一个确定的初始值当轴,一般用a[0]
-     * 1.准备两个计数器,分两个方向->和<-在数组中找.
-     * 2.两个计数器都不能越界
-     * 3.左计数器永远不能大于右计数器
-     * 4.左边找到比轴小的,和右边对换.右边计数器同理.
-     * 5.把找出来的轴和初始值对换.
-     *
-     * @param a    数组
-     * @param low  最小下标
-     * @param high 最大下标
-     * @return 轴的下标
-     */
-    private int getPivotIndex(Comparable[] a, int low, int high) {
-
-        Comparable partitionVal = a[low];
-
-        //冲第二个开始
-        int leftIndex = low;
-
-        //从最左边开始
-        int rightIndex = high + 1;
-
+    
+    private int partition(Comparable[] a, int lo, int hi) {
+        int left = lo+1;
+        int right = hi;
+        Comparable pivot = a[lo];
         while (true) {
-
-            while (less(a[++leftIndex], partitionVal)) {
-                if (leftIndex == high) {
-                    break;
-                }
-
-            }
-
-            while (less(partitionVal, a[--rightIndex])) {
-                if (rightIndex == low) {
+            while (less(a[left], pivot)) {
+                left++;
+                if (left == hi) {
                     break;
                 }
             }
-
-            //左右相遇,找到切点.此时leftIndex在右,rightIndex在左.
-            if (leftIndex >= rightIndex) {
+    
+            while (less(pivot, a[right])) {
+                right--;
+                if (right == lo) {
+                    break;
+                }
+            }
+            if (left >= right) {
                 break;
             }
-
-
-            //内循环跳出时说明找到了可以交换的值.
-            exch(a, leftIndex, rightIndex);
+            exch(a, left, right);
         }
-
-        //此时的leftIndex是比轴小,rightIndex比轴大.所以把小的和开头交换.
-        exch(a, low, rightIndex);
-        return rightIndex;
+        exch(a, lo, right);
+        return right;
     }
-
-
+    
+    public Comparable select(Comparable[] a, int k) {
+        k = k + 1;
+        int left = 0;
+        int right = a.length - 1;
+        while (left < right) {
+            int i = partition(a, left, right);
+            if (i > k) {
+                right = i - 1;
+            } else if (i < k) {
+                left = i + 1;
+            } else {
+                return a[k];
+            }
+        }
+        return a[k];
+    }
     public static void main(String[] args) {
-
-        String[] strings = new String[]{"d", "c", "b", "a"};
-
-
-        new QuickSort().sort(strings);
-
-        Arrays.stream(strings).forEach(System.out::println);
-
-
+    
+        String str = "987654321";
+        String[] strings = str.split("");
+    
+        QuickSort quickSort = new QuickSort();
+        quickSort.sort(strings);
+        System.out.println(quickSort.select(strings, 0));
+        Arrays.stream(strings).forEach(System.out::print);
+        
     }
 
 }

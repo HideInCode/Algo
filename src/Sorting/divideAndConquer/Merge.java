@@ -3,7 +3,7 @@ package Sorting.divideAndConquer;
 import Sorting.Sort;
 
 public class Merge extends Sort {
-
+    private static int count;
     private Comparable[] aux;
 
     @Override
@@ -13,14 +13,14 @@ public class Merge extends Sort {
     }
 
     private void sort(Comparable[] a, int low, int high) {
-
+        count++;
         //递的终点,归的起点.
         if (high <= low) {
             return;
         }
 
         int mid = low + (high - low) / 2;
-
+        System.out.println(low + "=" + mid + "=" + high);
         sort(a, low, mid);
         sort(a, mid + 1, high);
         merge(a, low, mid, high);
@@ -48,12 +48,13 @@ public class Merge extends Sort {
 
 
     public static void main(String[] args) {
-        String str = "afsadfldjsfjsa;faf";
+        String str = "987654321";
         String[] test = str.split("");
         new Merge().sort(test);
         for (String s : test) {
-            System.out.println(s);
+            System.out.print(s);
         }
-
+    
+        System.out.println(count);
     }
 }

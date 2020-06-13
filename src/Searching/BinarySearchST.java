@@ -3,6 +3,11 @@ package Searching;
 import Fundamentals.api.Queue;
 import Fundamentals.imp.QueueByLinkedList;
 
+/**
+ * 基于二分搜索的符号表
+ * @param <K>
+ * @param <V>
+ */
 public class BinarySearchST<K extends Comparable<K>, V> {
 
     private K[] keys;
@@ -44,13 +49,13 @@ public class BinarySearchST<K extends Comparable<K>, V> {
         int high = N - 1;
 
         while (low <= high) {
-            int mid = low + (low + high) / 2;
+            int mid = low + (high - low) / 2;
             int cmp = key.compareTo(keys[mid]);
 
             if (cmp < 0) {
-                low = mid - 1;
+                high = mid - 1;
             } else if (cmp > 0) {
-                high = mid + 1;
+                low = mid + 1;
             } else {
                 return mid;
             }
@@ -102,8 +107,7 @@ public class BinarySearchST<K extends Comparable<K>, V> {
 
     }
 
-
-    //找轴递归,返回轴的坐标.
+    
     public int rank(K key, int low, int high) {
 
         if (low > high) {
@@ -166,7 +170,16 @@ public class BinarySearchST<K extends Comparable<K>, V> {
 
         return queue;
     }
-
+    
+    public static void main(String[] args) {
+        BinarySearchST<String, String> test = new BinarySearchST<>(5);
+        test.put("a", "asd");
+        test.put("b", "bsd");
+        test.put("c", "csd");
+        System.out.println(test.get("b"));
+        System.out.println(test.rank("b "));
+        
+    }
 
 }
 

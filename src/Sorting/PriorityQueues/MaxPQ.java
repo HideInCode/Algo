@@ -1,182 +1,86 @@
 package Sorting.PriorityQueues;
 
+import java.util.Arrays;
 
 /**
- * 优先队列
- *
- * @param <Key>
+ * 二叉堆
  */
-public class MaxPQ<Key extends Comparable<Key>> {
-
-
-    //不使用pq[1]
-    private Key[] pq;
-
-    private int N = 0;
-
-    public MaxPQ() {
-        this(10);
-    }
-
+public class MaxPQ<K extends Comparable<K>> {
+    private K[] items;
+    private int size;
+    
     public MaxPQ(int max) {
-        pq = (Key[]) new Comparable[max];
+        this.items = (K[]) new Comparable[max + 1];
     }
-
-    public MaxPQ(Key[] a) {
-        pq = a;
-    }
-
-    void insert(Key v) {
-        if (N >= pq.length / 2) {
-            resize();
-        }
-        pq[++N] = v;
-        swim(N);
-    }
-
-    //数组扩容
-    private void resize() {
-
-        Key[] temp = (Key[]) new Object[pq.length * 2];
-        for (int i = 0; i < temp.length; i++) {
-            temp[i] = pq[i];
-        }
-
-        pq = temp;
-    }
-
-    public Key max() {
-        return pq[1];
-    }
-
-    public Key delMax() {
-
-        Key max = pq[1];
-        exch(1, N--);
-        pq[N + 1] = null;
-
-        sink(1);
-
-        return max;
-
-    }
-
-    public boolean isEmpty() {
-
-        return N == 0;
-    }
-
-    public int size() {
-        return 0;
-    }
-
-
+    
     private boolean less(int i, int j) {
-        return pq[i].compareTo(pq[j]) < 0;
+        return items[i].compareTo(items[j]) < 0;
     }
-
+    
     private void exch(int i, int j) {
-        Key t = pq[i];
-        pq[i] = pq[j];
-        pq[j] = t;
+        K temp = items[i];
+        items[i] = items[j];
+        items[j] = temp;
     }
-
-    private void exch(Comparable[] a, int i, int j) {
-        int first = i - 1;
-        int second = j - 1;
-
-        Comparable temp = a[first];
-        a[first] = a[second];
-        a[second] = temp;
-    }
-
-    private boolean less(Comparable[] a, int i, int j) {
-        int first = i - 1;
-        int second = j - 1;
-
-
-        return a[first].compareTo(a[second]) < 0;
-    }
-
-    /**
-     * 存在节点比父节点大,破坏了有序性,就要让这个节点上浮.
-     *
-     * @param curNodeIndex 树结构在数组中的索引.
-     */
-
-    private void swim(int curNodeIndex) {
-
-        while (curNodeIndex > 1 && less(curNodeIndex, curNodeIndex / 2)) {
-            exch(curNodeIndex, curNodeIndex / 2);
-            curNodeIndex = curNodeIndex / 2;
+    
+    private void swim(int k) {
+        while (k > 1 && less(k / 2, k)) {
+            exch(k, k / 2);
+            k /= 2;
         }
     }
-
-
-    /**
-     * 索引为k的节点,比他的子节点小,就要下沉.
-     *
-     * @param curNodeIndex 当前树节点
-     */
-    private void sink(int curNodeIndex) {
-        while (2 * curNodeIndex <= pq.length) {
-            int leftChildren = curNodeIndex * 2;
-            if (leftChildren < pq.length && less(leftChildren, leftChildren + 1)) {
-                //这里变成了右节点
-                leftChildren = leftChildren + 1;
+    
+    private void sink(int k) {
+        while (2 * k <= size) {
+            int left = 2 * k;
+            int right = 2 * k + 1;
+            if (less(left, right)) {
+                left = right;
             }
-            if (!less(curNodeIndex, leftChildren)) {
+            if (less(left, k)) {
                 break;
             }
-            exch(curNodeIndex, leftChildren);
-            curNodeIndex = leftChildren;
+            exch(left, k);
+            k = left;
         }
     }
-
-
-    public void sort(Comparable[] a) {
-        int N = a.length;
-        for (int k = N / 2; k >= 1; k--) {
-            sink(a, k, N);
-        }
-
-        while (N > 1) {
-            exch(a, 1, N--);
-            sink(a, 1, N);
-        }
+    
+    public void insert(K k) {
+        items[size + 1] = k;
+        swim(size + 1);
+        size++;
     }
-
-    private void sink(Comparable[] a, int curNodeIndex, int length) {
-        while (2 * curNodeIndex <= length) {
-            int leftChildren = curNodeIndex * 2;
-
-            //不越界 左边比右边小
-            if (leftChildren < length && less(a, leftChildren, leftChildren + 1)) {
-                //这里变成了右节点
-                leftChildren = leftChildren + 1;
-            }
-
-            //当前节点>=子节点
-            if (!less(a, curNodeIndex, leftChildren)) {
-                break;
-            }
-            exch(a, curNodeIndex, leftChildren);
-            curNodeIndex = leftChildren;
-        }
+    
+    public K max() {
+        return items[1];
     }
-
-
+    
+    public K delMax() {
+        K max = items[1];
+        items[1] = items[size];
+        size--;
+        items[size + 1] = null;
+        sink(1);
+        return max;
+    }
+    
+    public boolean isEmpty() {
+        return size == 0;
+    }
+    
+    public int size() {
+        return size;
+    }
+    
     public static void main(String[] args) {
-        String[] strings = new String[]{"d", "c", "b", "a"};
-
-
-        MaxPQ maxPQ = new MaxPQ();
-        maxPQ.sort(strings);
-
+        MaxPQ<String> queue = new MaxPQ<>(10);
+        String str = "yuioodfgjl";
+        String[] strings = str.split("");
         for (String string : strings) {
-            System.out.println(string);
+            queue.insert(string);
         }
-        maxPQ.insert("p100-.125K");
-        System.out.println(maxPQ.isEmpty());
+        System.out.println(Arrays.toString(queue.items));
+        String max = queue.max();
+        System.out.println(max);
     }
 }

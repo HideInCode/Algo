@@ -157,7 +157,7 @@ public class CollisionSystem {
         }
         
         CollisionSystem system = new CollisionSystem(particles);
-        system.simulate(10000, 0.5);
+        system.simulate(10000, 0.1);
         
         
         //从文件中读取粒子信息

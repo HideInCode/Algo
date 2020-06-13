@@ -7,6 +7,7 @@ import Sorting.Sort;
  * 也可以认为插入排序是增量为1的希尔排序
  */
 public class Shell extends Sort {
+    private static int count;
     @Override
     public void sort(Comparable[] comparables) {
         int increment = 1;
@@ -17,6 +18,7 @@ public class Shell extends Sort {
         while (increment >= 1) {
             for (int i = increment; i < comparables.length; i++) {
                 for (int j = i; j >= increment; j -= increment) {
+                    count++;
                     if (less(comparables[j], comparables[j - increment])) {
                         exch(comparables, j, j - increment);
                     }
@@ -28,11 +30,12 @@ public class Shell extends Sort {
 
     public static void main(String[] args) {
         Shell sort = new Shell();
-        String str = "sortedexample";
+        String str = "987654321";
         String[] strings = str.split("");
 
         sort.show(strings);
         sort.sort(strings);
         sort.show(strings);
+        System.out.println(count);
     }
 }
