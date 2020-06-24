@@ -239,66 +239,44 @@ public class BST<Key extends Comparable<Key>, Value> {
         return x;
     }
     
-    
     /**
-     * 一种不错的想法,编码有点复杂.
-     * 首先找到要删除的节点t,删除链表的方式删除掉.
-     * 删除后用右子树x的最小节点,我们删除掉它
-     * 用x替代原本t的位置,从而保证了二叉树的有序性.
-     *
-     * @param x   在根为x的子树中做删除.
-     * @param key 要删掉的key.
-     * @return 删除后树的根节点.
+     * 这段代码有点东西
+     * 删除完返回根节点
      */
-    private Node delete(Node x, Key key) {
-        if (x == null) {
+    private Node delete(Node root, Key key) {
+        if (root == null) {
             return null;
         }
-        
-        int cmp = key.compareTo(x.key);
-        
-        if (cmp < 0) {
-            //老规矩,小了往左走
-            x.left = delete(x.left, key);
-        } else if (cmp > 0) {
-            
-            //大了去右边.
-            x.right = delete(x.right, key);
+        int cmp = key.compareTo(root.key);
+        if (cmp > 0) {
+            root.right = delete(root.right, key);
+        } else if (cmp < 0) {
+            root.left = delete(root.left, key);
         } else {
-            //当找到了
-            //当前节点的右节点为空,返回左节点填补位置.
-            if (x.right == null) {
-                return x.left;
+            //参考删除最小节点,涉及三层关系
+            if (root.left == null) {
+                return root.right;
             }
-            
-            //当前节点的左节点为空,返回右节点地址填补位置.
-            if (x.left == null) {
-                return x.right;
+            if (root.right == null) {
+                return root.left;
             }
-            
-            Node t = x;
-            
-            //找出右子树的最小节点.
-            x = min(t.right);
-            
-            //干掉右子树的最小节点.即删除最小节点的连接,断开连接.
-            x.right = deleteMin(t.right);
-            
-            //x调整好了
-            x.left = t.left;
-            
+            Node old = root;
+            //取右子树最小的节点替换要删除的节点
+            root = min(root.right);
+            //删除的节点的左连接给当前节点
+            root.left = old.left;
+            //去掉右边最小节点的所有关联关系,然后重新关联新节点右节点
+            root.right = deleteMin(root.right);
         }
-        
-        //调整更节点的节点个数.
-        x.N = size(x.left) + size(x.right) + 1;
-        
-        return x;
+        root.N = size(root.left) + size(root.right) + 1;
+        return root;
     }
     
     public void delete(Key key) {
         root = delete(root, key);
     }
     
+    //二叉搜索树中序遍历,结果顺序打印
     public void print(Node x) {
         if (x == null) {
             return;
@@ -319,27 +297,26 @@ public class BST<Key extends Comparable<Key>, Value> {
         return queue;
     }
     
-    //把合格的数据插入队列.注意剔除不合要求的.
-    private void keys(Node x, Queue<Key> queue, Key low, Key high) {
-        if (x == null) {
+    //找出指定范围的数据放入队列
+    private void keys(Node root, Queue<Key> queue, Key low, Key high) {
+        if (root == null) {
             return;
         }
+        int loCmp = root.key.compareTo(low);
+        int hiCmp = root.key.compareTo(high);
         
-        int cmplow = low.compareTo(x.key);
-        int cmphigh = high.compareTo(x.key);
         
-        if (cmplow < 0) {
-            keys(x.left, queue, low, high);
+        //当前根节点在左范围内
+        if (loCmp > 0) {
+            keys(root.left, queue, low, high);
         }
-        
-        
-        //同时满足下界不大于x,上界不小于x时才会满足.
-        if (cmplow <= 0 && cmphigh >= 0) {
-            queue.enqueue(x.key);
+        //中序遍历保持有序性
+        if (loCmp >= 0 && hiCmp <= 0) {
+            queue.enqueue(root.key);
         }
-        
-        if (cmphigh > 0) {
-            keys(x.right, queue, low, high);
+        //当前根节点在右范围内
+        if (hiCmp < 0) {
+            keys(root.right, queue, low, high);
         }
     }
     
@@ -358,14 +335,17 @@ public class BST<Key extends Comparable<Key>, Value> {
         bst.put("d", "d");
 
 //        bst.print(bst.root);
+
+//        System.out.println(bst.floor("b"));
+//        System.out.println(bst.ceiling("b"));
+        bst.delete("c");
+//        bst.print(bst.root);
         
-        System.out.println(bst.floor("b"));
-        System.out.println(bst.ceiling("b"));
-        Iterable<String> keys = bst.keys();
-        
+        Iterable<String> keys = bst.keys("a", "e");
         for (String key : keys) {
             System.out.println(key);
         }
+        
     }
 }
 
