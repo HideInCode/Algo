@@ -4,7 +4,7 @@ package Searching;
  * 红黑树,又叫做平衡-二叉查找树,可以看做是2-3树的实现
  * 目的是为了用二叉树的查找速度,2-3树的插入速度.
  * 通过定义红链接和黑链接,把一个平衡的2-3树化为红黑树.来优化在二叉树查找树最坏情况下的插入和删除情况.
- *
+ * 具体操作图见pdf(尤其是删除)
  * @param <Key>
  * @param <Value>
  */
@@ -74,25 +74,24 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      * 原理就是:若某个节点(记作某个子树的根)的右链接是red,对于这个子树,我们认为根的指向不对,指向了小的key.
      * 调整根的指向 把key较大者作为根节点,并把黑链接正确分配.
      *
-     * @param root 指向这个错误子树根的指针
+     * @param root
      * @return 旋转后正确的root的地址
      */
     private Node rotateLeft(Node root) {
         //整理黑链接
-        Node x = root.right;
-        root.right = x.left;
-        x.left = root;
+        Node target = root.right;
+        root.right = target.left;
+        target.left = root;
         
         //重新定义红链接
-        x.color = root.color;
-        root.color = RED;
+        target.color = target.left.color;
+        target.left.color = RED;
         
         //校正调整后节点的个数
-        x.N = root.N;
-        
+        target.N = root.N;
         root.N = 1 + size(root.left) + size(root.right);
         
-        return x;
+        return target;
     }
     
     
@@ -104,17 +103,17 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
      * @return 旋转后的子树根节点
      */
     private Node rotateRight(Node root) {
-        Node x = root.left;
-        root.left = x.right;
-        x.right = root;
+        Node target = root.left;
+        root.left = target.right;
+        target.right = root;
         
-        x.color = root.color;
-        root.color = RED;
+        target.color = target.right.color;
+        target.right.color = RED;
         
-        x.N = root.N;
+        target.N = root.N;
         root.N = 1 + size(root.left) + size(root.right);
         
-        return x;
+        return target;
     }
     
     
@@ -157,22 +156,28 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (root == null) {
             return new Node(key, value, 1, RED);
         }
-        int cmp = root.key.compareTo(key);
-        if (cmp > 0) {
+        int cmp = key.compareTo(root.key);
+        if (cmp < 0) {
             root.left = put(root.left, key, value);
-        } else if (cmp < 0) {
+        } else if (cmp > 0) {
             root.right = put(root.right, key, value);
         } else {
             root.val = value;
         }
         
         //根据三种情况旋转
-        if (isRed(root.right) && !isRed(root.left)) {
+        
+        //右红左黑 不符合左倾原则
+        if (isRed(root.right)) {
             root = rotateLeft(root);
         }
+        
+        //左边连续两个都是红的 不符合不能有两个红链接原则
         if (isRed(root.left) && isRed((root.left))) {
             root = rotateRight(root);
         }
+        
+        //同样不符合两个红链接原则
         if (isRed(root.left) && isRed(root.right)) {
             flipColors(root);
         }
@@ -180,7 +185,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         return root;
     }
     
-    
+    //todo 有问题
     public void put(Key key, Value value) {
         root = put(root, key, value);
         //不要忘了换掉根节点的颜色.
@@ -205,9 +210,184 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         }
     }
     
-    //todo
-    public void delete(Key key) {
+    private Node balance(Node root) {
+        if (isRed(root.right)) {
+            root = rotateLeft(root);
+        }
+        if (isRed(root.left) && isRed(root.left.left)) {
+            root = rotateRight(root);
+        }
+        if (isRed(root.left) && isRed(root.right)) {
+            flipColor(root);
+        }
+        
+        return root;
+    }
     
+    private Node moveRedToRight(Node root) {
+        flipColor(root);
+        //兄弟节点是2-节点
+        if (!isRed(root.left.left)) {
+            root = rotateRight(root);
+            flipColor(root);
+        }
+        return root;
+    }
+    
+    private void flipColor(Node root) {
+        root.color = !root.color;
+        root.left.color = !root.left.color;
+        root.right.color = !root.right.color;
+    }
+    
+    /**
+     * 删除最小键
+     * 删除2-3树中的3节点很简单,删除2-节点很麻烦,所以不删除2-节点,即不删除红黑树中的黑色节点
+     * 删除最小就是沿着左连接往下找,
+     */
+    public void deleteMin() {
+        if (isBlack(root.left) && isBlack(root.right)) {
+            root.color = RED;
+        }
+        root = deleteMin(root);
+        if (root != null) {
+            root.color = BLACK;
+        }
+    }
+    
+    private Node deleteMin(Node root) {
+        if (root.left == null) {
+            return null;
+        }
+        
+        //当前节点是2-节点
+        if (isBlack(root.left) && isBlack(root.left.left)) {
+            root = moveRedToLeft(root);
+        }
+        root.left = deleteMin(root.left);
+        return balance(root);
+    }
+    
+    private boolean isBlack(Node root) {
+        return !isRed(root);
+    }
+    /**
+     * 左边2-节点借节点的方法
+     * @param root
+     * @return
+     */
+    private Node moveRedToLeft(Node root) {
+        //合并当前节点和左右子节点
+        flipColor(root);
+    
+        //若右边不是2-节点,可以借
+        if (isRed(root.right.left)) {
+            //右旋root.right,是的root.right root.right.right root.left 都变成红(其实这里已经出现了5-节点)
+            root.right = rotateRight(root.right);
+            //左旋root 把上一步的节点从右边借过来
+            root = rotateLeft(root);
+            //分解当前节点和左右子节点
+            flipColor(root);
+        }
+        return root;
+    }
+    
+    //删除最大节点,回复根节点颜色
+    public void deleteMax() {
+        root = deleteMax(root);
+        root.color = BLACK;
+    }
+    
+    /**
+     * 删除最大节点并返回删除后的根节点
+     * 1.向父节点借 就染色
+     * 2.向兄弟节点借 就右旋
+     *
+     * @param root
+     * @return
+     */
+    private Node deleteMax(Node root) {
+        
+        //需要左边挪一个过来,不然右边少一个后会不平衡
+        if (isRed(root.left)) {
+            root = rotateRight(root);
+        }
+        
+        //用null替换right,实现删除
+        if (root.right == null) {
+            return null;
+        }
+        
+        //这个是个二节点,需要接节点
+        if (isBlack(root.right) && isBlack(root.right.left)) {
+            root = moveRedToRight(root);
+        }
+        //继续往右边走
+        root.right = deleteMax(root.right);
+        
+        //最后重新调整成平衡状态
+        return balance(root);
+    }
+    
+    /**
+     * 删除操作 用右子树最大或者左子树最小来李代桃僵 保证有序性
+     * @param key
+     */
+    public void delete(Key key) {
+        if (isBlack(root.left) && isBlack(root.right)) {
+            root.color = RED;
+        }
+        root = delete(root, key);
+        if (root != null) {
+            root.color = BLACK;
+        }
+    }
+    
+    private Node delete(Node root, Key key) {
+        if (key.compareTo(root.key) < 0) {
+            //2-节点借节点
+            if (isBlack(root.left) && isBlack(root.left)) {
+                root = moveRedToLeft(root);
+            }
+            root.left = deleteMax(root.left);
+        } else {
+            //同删除最大中的平衡操作
+            if (isRed(root.left)) {
+                root = rotateRight(root);
+            }
+            //要删除的键是最底层 直接干掉
+            if (key.compareTo(root.key) == 0 && root.right == null) {
+                return null;
+            }
+    
+            //排除了最底层后, 就可以李代桃僵操作法
+            if (key.compareTo(root.key) == 0) {
+                root.val = get(root.right, min(root.right).key);
+                root.key = min(root.right).key;
+                root.right = deleteMax(root.right);
+            } else {
+                root.right = delete(root.right, key);
+            }
+        }
+        return balance(root);
+    }
+    
+    private Node min(Node root) {
+        if (root.left == null) {
+            return root;
+        }
+        return min(root.left);
+    }
+    public void print() {
+        print(root);
+    }
+    private void print(Node root) {
+        if (root == null) {
+            return;
+        }
+        print(root.left);
+        System.out.println(root.val);
+        print(root.right);
     }
     public static void main(String[] args) {
         
@@ -216,8 +396,13 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         bst.put("b", "b");
         bst.put("c", "c");
         bst.put("d", "d");
-        String a = bst.get("a");
-        System.out.println(a);
+//        String a = bst.get("a");
+//        System.out.println(a);
+//        bst.deleteMax();
+//        bst.deleteMin();
+        bst.print();
+        
+        
     }
     
 }
