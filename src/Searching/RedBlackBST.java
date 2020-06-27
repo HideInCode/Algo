@@ -345,10 +345,10 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     private Node delete(Node root, Key key) {
         if (key.compareTo(root.key) < 0) {
             //2-节点借节点
-            if (isBlack(root.left) && isBlack(root.left)) {
+            if (isBlack(root.left) && isBlack(root.left.left)) {
                 root = moveRedToLeft(root);
             }
-            root.left = deleteMax(root.left);
+            root.left = delete(root.left,key);
         } else {
             //同删除最大中的平衡操作
             if (isRed(root.left)) {
@@ -361,9 +361,10 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     
             //排除了最底层后, 就可以李代桃僵操作法
             if (key.compareTo(root.key) == 0) {
-                root.val = get(root.right, min(root.right).key);
-                root.key = min(root.right).key;
-                root.right = deleteMax(root.right);
+                Node min = min(root.right);
+                root.key = min.key;
+                root.val = min.val;
+                root.right = deleteMin(root.right);
             } else {
                 root.right = delete(root.right, key);
             }
@@ -395,10 +396,11 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         bst.put("b", "b");
         bst.put("c", "c");
         bst.put("d", "d");
-        String a = bst.get("a");
-        System.out.println(a);
-        bst.deleteMax();
-        bst.deleteMin();
+//        String a = bst.get("a");
+//        System.out.println(a);
+//        bst.deleteMax();
+//        bst.deleteMin();
+        bst.delete("b");
         bst.print();
         
         
