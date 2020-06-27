@@ -22,7 +22,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (x == null) {
             return 0;
         } else {
-            return x.N;
+            return x.size;
         }
         
     }
@@ -45,7 +45,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         Node right;
         
         //树的节点总数.
-        int N;
+        int size;
         
         //父节点指向当前节点的连接颜色.
         boolean color;
@@ -53,7 +53,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         public Node(Key key, Value val, int n, boolean color) {
             this.key = key;
             this.val = val;
-            N = n;
+            size = n;
             this.color = color;
         }
     }
@@ -88,8 +88,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         target.left.color = RED;
         
         //校正调整后节点的个数
-        target.N = root.N;
-        root.N = 1 + size(root.left) + size(root.right);
+        target.size = root.size;
+        root.size = 1 + size(root.left) + size(root.right);
         
         return target;
     }
@@ -110,8 +110,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         target.color = target.right.color;
         target.right.color = RED;
         
-        target.N = root.N;
-        root.N = 1 + size(root.left) + size(root.right);
+        target.size = root.size;
+        root.size = 1 + size(root.left) + size(root.right);
         
         return target;
     }
@@ -168,12 +168,12 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         //根据三种情况旋转
         
         //右红左黑 不符合左倾原则
-        if (isRed(root.right)) {
+        if (isRed(root.right) && isBlack(root.left)) {
             root = rotateLeft(root);
         }
         
         //左边连续两个都是红的 不符合不能有两个红链接原则
-        if (isRed(root.left) && isRed((root.left))) {
+        if (isRed(root.left) && isRed((root.left.left))) {
             root = rotateRight(root);
         }
         
@@ -181,11 +181,10 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (isRed(root.left) && isRed(root.right)) {
             flipColors(root);
         }
-        root.N = size(root.left) + size(root.right) + 1;
+        root.size = size(root.left) + size(root.right) + 1;
         return root;
     }
     
-    //todo 有问题
     public void put(Key key, Value value) {
         root = put(root, key, value);
         //不要忘了换掉根节点的颜色.
@@ -396,10 +395,10 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         bst.put("b", "b");
         bst.put("c", "c");
         bst.put("d", "d");
-//        String a = bst.get("a");
-//        System.out.println(a);
-//        bst.deleteMax();
-//        bst.deleteMin();
+        String a = bst.get("a");
+        System.out.println(a);
+        bst.deleteMax();
+        bst.deleteMin();
         bst.print();
         
         
