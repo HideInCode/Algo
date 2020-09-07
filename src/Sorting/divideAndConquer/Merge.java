@@ -14,7 +14,7 @@ public class Merge extends Sort {
 
     private void sort(Comparable[] a, int low, int high) {
         count++;
-        //递的终点,归的起点.
+        //递的终点,归的起点. 左右指针相等时,就意味着区间里只有一个元素了.
         if (high <= low) {
             return;
         }

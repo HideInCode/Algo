@@ -1,9 +1,12 @@
 package Graphs.UndirectedGraphs;
 
 import Fundamentals.api.Queue;
+import Fundamentals.api.Stack;
 import Fundamentals.imp.QueueByLinkedList;
+import Fundamentals.imp.StackByLinkedList;
+import Fundamentals.utils.In;
+import Fundamentals.utils.StdOut;
 
-import java.util.Stack;
 
 /**
  * 广度优先搜索
@@ -13,13 +16,13 @@ public class BreadthFirstPaths {
     //到达该顶点的最短路径是已知的吗?
     private boolean[] marked;
     private int[] edgeTo;
-    private final int s;
+    private final int start;
 
-    public BreadthFirstPaths(Graph graph, int s) {
+    public BreadthFirstPaths(Graph graph, int start) {
         marked = new boolean[graph.V()];
         edgeTo = new int[graph.V()];
-        this.s = s;
-        bfs(graph, s);
+        this.start = start;
+        bfs(graph, start);
     }
 
     /**
@@ -59,13 +62,32 @@ public class BreadthFirstPaths {
             return null;
         }
 
-        Stack<Integer> path = new Stack<>();
-        for (int x = v; x != s; x = edgeTo[x]) {
+        Stack<Integer> path = new StackByLinkedList<>();
+        for (int x = v; x != start; x = edgeTo[x]) {
             path.push(x);
         }
 
-        path.push(s);
+        path.push(start);
 
         return path;
     }
+    public static void main(String[] args) {
+        Graph g = new Graph(new In(args[0]));
+        int start = Integer.parseInt(args[1]);
+        DepthFirstPaths paths = new DepthFirstPaths(g, start);
+        for (int i = 0; i < g.V(); i++) {
+            StdOut.print(start + " to " + i + ": ");
+            if (paths.hasPathTo(i)) {
+                for (Integer v : paths.pathTo(i)) {
+                    if (v == start) {
+                        StdOut.print(v);
+                    } else {
+                        StdOut.print("-" + v);
+                    }
+                }
+            }
+            StdOut.println();
+        }
+    }
+    
 }

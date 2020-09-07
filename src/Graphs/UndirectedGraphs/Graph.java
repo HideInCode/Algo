@@ -56,7 +56,7 @@ public class Graph {
     //向图中添加一条v-w
     public void addEdge(int v, int w) {
 
-        //互为节点
+        //互为邻接顶点
         adj[v].add(w);
         adj[w].add(v);
 

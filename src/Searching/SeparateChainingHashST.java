@@ -19,7 +19,6 @@ public class SeparateChainingHashST<Key, Value> {
     private SequentialSearchST<Key, Value>[] st;
 
     public SeparateChainingHashST() {
-
         this(977);
     }
 
@@ -28,7 +27,6 @@ public class SeparateChainingHashST<Key, Value> {
         st = new SequentialSearchST[M];
 
         for (int i = 0; i < M; i++) {
-
             //数组的每个元素都存着一个链表的首地址
             st[i] = new SequentialSearchST<>();
         }
@@ -50,14 +48,13 @@ public class SeparateChainingHashST<Key, Value> {
     }
 
 
-    //空函数
     public Iterable<Key> keys() {
+        
         return null;
     }
 
-    //空函数
     public void delete() {
-
+    
     }
 }
 

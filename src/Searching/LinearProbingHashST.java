@@ -1,5 +1,14 @@
 package Searching;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+/**
+ * 开放地址法之一:线性探测法
+ * @param <Key>
+ * @param <Value>
+ */
 public class LinearProbingHashST<Key, Value> {
     private int N;//键值对的总个数.
     private int M;//数组的大小.
@@ -51,6 +60,7 @@ public class LinearProbingHashST<Key, Value> {
      * @param value
      */
     public void put(Key key, Value value) {
+        //数组位于1/8到1/2之间性能最好
         if (N >= M / 2) {
             resize(2 * M);
         }
@@ -93,47 +103,46 @@ public class LinearProbingHashST<Key, Value> {
     }
 
     public void delete(Key key) {
-
-        //没有直接结束
+        if (key == null) {
+            return;
+        }
         if (!contains(key)) {
             return;
         }
-
-
-        //有就一个个的找
-        int i = hash(key);
-        while (!key.equals(keys[i])) {
-            i = (i + 1) % M;
+    
+        int index = 0;
+        while (!key.equals(keys[index])) {
+            index = (index + 1) % M;
         }
-
-        //找到就置空
-        keys[i] = null;
-        values[i] = null;
-        i = (i + 1) % M;
-
-
-        //把不为空的重新拿出来放进去,
-        //有些key并不是放在散列码所在的位置(因为重复的往后移了),所以要拿出来重新计算hashCode再放进去
-        while (keys[i] != null) {
-            Key keyToRedo = keys[i];
-            Value valToRedo = values[i];
-            keys[i] = null;
-            values[i] = null;
-
+        
+        keys[index] = null;
+        values[index] = null;
+    
+        index = (index + 1) % M;
+        while (keys[index] != null) {
+            Key toMove = keys[index];
+            Value toMoveVal = values[index];
+            keys[index] = null;
+            values[index] = null;
             N--;
-            put(keyToRedo, valToRedo);
-            i = (i + 1) % M;
+            put(toMove, toMoveVal);
+            index = (index + 1) % M;
         }
-
         N--;
-
-        //过大就缩减空间
+        //数组位于1/8到1/2之间性能最好
         if (N > 0 && N == M / 8) {
             resize(M / 2);
         }
+        LinkedList<Integer> test = new LinkedList<>();
+        List<List<Integer>> fuck = new LinkedList<>();
+        fuck.add(test);
     }
-
-
+    
+    @Override
+    public String toString() {
+        return "keys:"+Arrays.toString(keys) + "\nvalues:" + Arrays.toString(values);
+    }
+    
     public static void main(String[] args) {
         LinearProbingHashST<String, String> map = new LinearProbingHashST<>(100);
 
@@ -143,7 +152,13 @@ public class LinearProbingHashST<Key, Value> {
 
         map.delete("r");
         System.out.println(map.get("a"));
-
-
+    
+        System.out.println(map);
+        
+        int maxValue = Integer.MAX_VALUE;
+        System.out.println(Math.abs(maxValue));
+        System.out.println("polygenelubricants".hashCode());
+        System.out.println("Aa".hashCode());
+        System.out.println("BB".hashCode());
     }
 }
