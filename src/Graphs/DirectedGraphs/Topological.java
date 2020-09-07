@@ -3,12 +3,15 @@ package Graphs.DirectedGraphs;
 import Fundamentals.utils.StdOut;
 import Graphs.ShortestPaths.EdgeWeightedDigraph;
 import Graphs.ShortestPaths.EdgeWeightedDirectedCycle;
-import Graphs.UndirectedGraphs.DirectedCycle;
 
 /**
  * 拓扑排序 有向无环图的逆序就是拓扑排序
  * 拓扑是研究几何图形或空间在连续 改变形状后还能保持不变的一些性质的一个学科.
  * 只考虑物体间的位置关系,不考虑他们的形状和大小.
+ * 关键:
+ * 1.指定任务优先级
+ * 2.检测图中的环,保证是DAG
+ * 3.拓扑排序
  */
 public class Topological {
 
@@ -31,7 +34,7 @@ public class Topological {
         }
     }
 
-    //是个无向环图吗
+    //是个有向无环图吗
     public boolean isDAG() {
         return hasOrder();
     }

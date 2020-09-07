@@ -27,7 +27,21 @@ public class StackByLinkedList<T> implements Stack<T> {
     
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new Iterator<>() {
+            private Node cur = curNode;
+            
+            @Override
+            public boolean hasNext() {
+                return cur != null;
+            }
+            
+            @Override
+            public T next() {
+                T item = cur.data;
+                cur = cur.next;
+                return item;
+            }
+        };
     }
     
     //新的元素应该找上个元素,不该去找第一个,所以把上个元素变成第一个
@@ -63,7 +77,18 @@ public class StackByLinkedList<T> implements Stack<T> {
         StackByLinkedList<String> stackByLinkedList = new StackByLinkedList<>();
         stackByLinkedList.push("hello");
         stackByLinkedList.push("world");
-        String pop = stackByLinkedList.pop();
-        System.out.println(pop);
+//        String pop = stackByLinkedList.pop();
+//        System.out.println(pop);
+        for (String s : stackByLinkedList) {
+            System.out.println(s);
+        }
+    
+        java.util.Stack<String> strings = new java.util.Stack<>();
+        strings.push("a");
+        strings.push("b");
+        strings.push("c");
+        for (String string : strings) {
+            System.out.println(string);
+        }
     }
 }

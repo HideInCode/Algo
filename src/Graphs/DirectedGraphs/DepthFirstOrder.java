@@ -1,11 +1,12 @@
 package Graphs.DirectedGraphs;
 
 import Fundamentals.api.Queue;
+import Fundamentals.api.Stack;
 import Fundamentals.imp.QueueByLinkedList;
+import Fundamentals.imp.StackByLinkedList;
 import Graphs.ShortestPaths.DirectedEdge;
 import Graphs.ShortestPaths.EdgeWeightedDigraph;
 
-import java.util.Stack;
 
 /**
  * 深度优先排序
@@ -19,7 +20,7 @@ public class DepthFirstOrder {
     //后序: 在递归调用之后将顶点加入队列.
     private Queue<Integer> post;
 
-    //逆后序: 在递归调用之后将顶点压入栈.
+    //逆后序: 在递归调用之后将顶点压入栈.可以考虑deque
     private Stack<Integer> reversePost;
 
     //前序计数器
@@ -32,7 +33,7 @@ public class DepthFirstOrder {
     public DepthFirstOrder(Digraph G) {
         pre = new QueueByLinkedList<>();
         post = new QueueByLinkedList<>();
-        reversePost = new Stack<>();
+        reversePost = new StackByLinkedList<>();
 
         marked = new boolean[G.V()];
         for (int v = 0; v < G.V(); v++) {
@@ -45,7 +46,7 @@ public class DepthFirstOrder {
     public DepthFirstOrder(EdgeWeightedDigraph G) {
         pre = new QueueByLinkedList<>();
         post = new QueueByLinkedList<>();
-        reversePost = new Stack<>();
+        reversePost = new StackByLinkedList<>();
 
         marked = new boolean[G.V()];
         for (int v = 0; v < G.V(); v++) {

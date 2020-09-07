@@ -13,7 +13,6 @@ public class TwoColor {
 
     public TwoColor(Graph graph) {
         marked = new boolean[graph.V()];
-
         color = new boolean[graph.V()];
 
         for (int s = 0; s < graph.V(); s++) {
@@ -28,12 +27,13 @@ public class TwoColor {
         for (Integer w : graph.adj(v)) {
 
             if (!marked[w]) {
-                //构建图时保证和相邻的都不一样
+                //相邻的染成不一样
                 color[w] = !color[v];
                 dfs(graph, w);
-            } else if (color[w] == color[v]) {//标记过还一样颜色,说明无法构成二色图了.
+                //标记过还一样颜色,说明无法构成二色图了.
+            } else if (color[w] == color[v]) {
                 isTwoColorable = false;
-
+                break;
             }
 
         }

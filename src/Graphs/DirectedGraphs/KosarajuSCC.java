@@ -1,22 +1,19 @@
 package Graphs.DirectedGraphs;
 
 /**
- * 计算联通分量的实现
+ * 线性复杂度计算有向图的强连通分量
  */
-public class KosarajuSCC extends SCC {
+public class KosarajuSCC {
     private boolean[] marked;
 
-    //强连通分量的标识
+    //强连通分量的标识,第几个连通分量
     private int[] id;
 
     //强连通分量的数量
     private int count;
 
     public KosarajuSCC(Digraph digraph) {
-
-        //虽然啥也不干,但是格式上这么要求的.
-        super(digraph);
-
+        
         marked = new boolean[digraph.V()];
         id = new int[digraph.V()];
 
@@ -41,17 +38,14 @@ public class KosarajuSCC extends SCC {
         }
     }
 
-    @Override
     public boolean stronglyConnected(int v, int w) {
         return id[v] == id[w];
     }
 
-    @Override
     public int count() {
         return count;
     }
-
-    @Override
+    
     public int id(int v) {
         return id[v];
     }

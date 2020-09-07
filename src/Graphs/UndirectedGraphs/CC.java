@@ -1,54 +1,71 @@
 package Graphs.UndirectedGraphs;
 
+import Fundamentals.api.Bag;
+import Fundamentals.imp.BagByLinkedList;
+import Fundamentals.utils.In;
+import Fundamentals.utils.StdOut;
+
 /**
- * 联通分量
+ * 连通分量的计算
  */
 public class CC {
-
     private boolean[] marked;
-
-    //以顶点当做数组下标
     private int[] id;
-
-
-    //连通分量个数
     private int count;
-
+    
     public CC(Graph graph) {
-
         marked = new boolean[graph.V()];
-        for (int s = 0; s < graph.V(); s++) {
-            if (!marked[s]) {
-                dfs(graph, s);
+        id = new int[graph.V()];
+        for (int i = 0; i < graph.V(); i++) {
+            if (!marked[i]) {
+                dfs(graph, i);
                 count++;
             }
         }
     }
-
-    private void dfs(Graph graph, int v) {
+    
+    private void dfs(Graph g, int v) {
         marked[v] = true;
         id[v] = count;
-
-        for (Integer w : graph.adj(v)) {
-            if (!marked[w]) {
-                dfs(graph, w);
+        for (Integer i : g.adj(v)) {
+            if (!marked[i]) {
+                dfs(g, i);
             }
+            
         }
+        
     }
-
-
-    //v,w这两个顶点联通吗
+    
     public boolean connected(int v, int w) {
         return id[v] == id[w];
     }
-
-    //连通分量
-    int count() {
-        return count;
-    }
-
-    //v所在的连通分量的标识符(0~count()-1)
+    
     public int id(int v) {
         return id[v];
+    }
+    
+    public int count() {
+        return count;
+    }
+    
+    public static void main(String[] args) {
+        Graph g = new Graph(new In(args[0]));
+        CC cc = new CC(g);
+        int count = cc.count();
+        StdOut.println(count + " components");
+        
+        Bag<Integer>[] components = new Bag[count];
+        for (int i = 0; i < count; i++) {
+            components[i] = new BagByLinkedList<>();
+        }
+        for (int v = 0; v < g.V(); v++) {
+            components[cc.id(v)].add(v);
+        }
+        for (int i = 0; i < count; i++) {
+            for (Integer v : components[i]) {
+                    StdOut.print(v+" ");
+            }
+            StdOut.println();
+        }
     }
 }

@@ -3,6 +3,9 @@ package Graphs.DirectedGraphs;
 import Fundamentals.utils.In;
 import Searching.BST;
 
+/**
+ * 参考无向图的符号图
+ */
 public class SymbolDigraph {
     private BST<String, Integer> st;
     private String[] keys;

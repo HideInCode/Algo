@@ -4,7 +4,8 @@ import Fundamentals.utils.StdIn;
 import Fundamentals.utils.StdOut;
 
 /**
- * 间隔的度数
+ * 间隔的度数 可以认为是两个顶点间的最小距离问题
+ * 可以用来研究演员与演员之间的度数
  */
 public class DegreeOfSeparation {
     public static void main(String[] args) {
