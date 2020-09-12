@@ -1,12 +1,10 @@
 package Fundamentals.practice.基础编程模型;
 
-import Fundamentals.api.Stack;
-import Fundamentals.imp.StackByLinkedList;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Test1_1 {
     
@@ -160,13 +158,7 @@ public class Test1_1 {
         int[] result = new int[M];
         for (int i = 0; i < result.length; i++) {
             Integer count = map.get(i);
-            if (count == null) {
-                result[i] = 0;
-            } else {
-                result[i] = count;
-            }
-            
-            
+            result[i] = Objects.requireNonNullElse(count, 0);
         }
         return result;
     }
@@ -267,13 +259,8 @@ public class Test1_1 {
     
     private static int count(int key, int[] a) {
         Map<Integer, Integer> valMapCounter = new HashMap<>();
-        for (int i = 0; i < a.length; i++) {
-            Integer count = valMapCounter.get(a[i]);
-            if (count == null) {
-                valMapCounter.put(a[i], 1);
-            } else {
-                valMapCounter.put(a[i], count + 1);
-            }
+        for (int value : a) {
+            valMapCounter.merge(value, 1, Integer::sum);
         }
         if (valMapCounter.get(key) == null) {
             return -1;

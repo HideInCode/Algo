@@ -23,7 +23,8 @@ public class EdgeWeightedGraph {
             adj[i] = new BagByLinkedList<>();
         }
     }
-
+    
+    //前两行是顶点个数和边个数
     public EdgeWeightedGraph(In in) {
         this(in.readInt());
         int E = in.readInt();

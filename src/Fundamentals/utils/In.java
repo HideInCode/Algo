@@ -147,7 +147,7 @@ public final class In {
     /**
      * Initializes an input stream from a filename or web page name.
      *
-     * @param name the filename or web page name
+     * @param name the filename or web page name,文件路径
      * @throws IllegalArgumentException if cannot open {@code name} as
      *                                  a file or URL
      * @throws IllegalArgumentException if {@code name} is {@code null}

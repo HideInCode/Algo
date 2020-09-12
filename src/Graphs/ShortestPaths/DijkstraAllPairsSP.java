@@ -21,4 +21,8 @@ public class DijkstraAllPairsSP {
     double dist(int s, int t) {
         return all[s].distTo(t);
     }
+    
+    public static void main(String[] args) {
+        System.out.println(Double.POSITIVE_INFINITY+Double.POSITIVE_INFINITY);
+    }
 }

@@ -18,7 +18,10 @@ public class EdgeWeightedDigraph {
         this.V = v;
         this.E = 0;
         adj = new BagByLinkedList[v];
-        for (int i = 0; i < V; i++) {
+        
+        //不可这么写,所有元素的都指向一个对象了
+//        Arrays.fill(adj, new BagByLinkedList<>());
+        for (int i = 0; i < adj.length; i++) {
             adj[i] = new BagByLinkedList<>();
         }
     }
