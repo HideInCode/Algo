@@ -2,42 +2,56 @@ package Strings.sort;
 
 /**
  * 低位优先的字符串
- * 使用数字代替字符,从右往左检查字符串->优先检查数字的最低位.
- * 适用于键的长度都相同的字符串排序应用.
+ * 从右往左检查字符串->优先检查数字的最低位.
+ * 计数排序的多键情况
  */
 public class LSD {
+    //字符集是拓展的ascii,即数组中最多有256种字符
+    private static final int R = 256;
+    
     /**
-     * @param a 待排序的数组
-     * @param w 通过前w个字符排序
+     * @param a 要排序的数组
+     * @param w 排序元素长度
      */
     public static void sort(String[] a, int w) {
-        int N = a.length;
-        int R = 256;
-
-        String[] aux = new String[N];
-        for (int d = w - 1; d >= 0; d--) {
-            //关系着字符串元素频率与下标关系
+        int n = a.length;
+        String[] aux = new String[n];
+        
+        for (int i = w-1; i >= 0; i--) {
             int[] count = new int[R + 1];
-
-            //计算出现频率
-            for (int i = 0; i < N; i++) {
-                count[a[i].charAt(d) + 1]++;
+            for (int j = 0; j < n; j++) {
+                count[a[j].charAt(i) + 1]++;
             }
-            //将频率转换为索引
-            for (int r = 0; r < R; r++) {
-                count[r + 1] += count[r];
+            for (int j = 0; j < R; j++) {
+                count[j + 1] += count[j];
             }
-            //将元素分类,根据每个元素的key在count中的位置,每次自增一个是为了下一个元素能在aux中正确的索引
-            for (int i = 0; i < N; i++) {
-                aux[count[a[i].charAt(d)]++] = a[i];
+            for (int j = 0; j < n; j++) {
+                aux[count[a[j].charAt(i)]++] = a[j];
             }
-
-            //回写元素
-            for (int i = 0; i < N; i++) {
-                a[i] = aux[i];
+            for (int j = 0; j < n; j++) {
+                a[j] = aux[j];
             }
-
         }
-
+    }
+    
+    public static void main(String[] args) {
+        String s = "4PGC938\n" +
+                           "2IYE230\n" +
+                           "3CIO720\n" +
+                           "1ICK750\n" +
+                           "1OHV845\n" +
+                           "4JZY524\n" +
+                           "1ICK750\n" +
+                           "3CIO720\n" +
+                           "1OHV845\n" +
+                           "1OHV845\n" +
+                           "2RLA629\n" +
+                           "2RLA629\n" +
+                           "3ATW723";
+        String[] strings = s.split("\n");
+        sort(strings,7);
+        for (String string : strings) {
+            System.out.println(string);
+        }
     }
 }

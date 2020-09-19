@@ -1,7 +1,7 @@
 package Strings.sort;
 
 /**
- * 解决相同字符开头的多个字符串的排序问题
+ * 前缀相同的字符排序问题
  */
 public class Quick3string {
     private static int charAt(String s, int d) {
@@ -55,8 +55,20 @@ public class Quick3string {
     }
     
     public static void main(String[] args) {
-        String s = "asfsafhwnrjhjqwrjqp";
-        String[] strings = s.split("");
+        String s = "4PGC938\n" +
+                           "2IYE230\n" +
+                           "3CIO720\n" +
+                           "1ICK750\n" +
+                           "1OHV845\n" +
+                           "4JZY524\n" +
+                           "1ICK750\n" +
+                           "3CIO720\n" +
+                           "1OHV845\n" +
+                           "1OHV845\n" +
+                           "2RLA629\n" +
+                           "2RLA629\n" +
+                           "3ATW723";
+        String[] strings = s.split("\n");
         sort(strings);
         for (String string : strings) {
             System.out.println(string);

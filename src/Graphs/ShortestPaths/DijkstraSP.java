@@ -67,11 +67,6 @@ public class DijkstraSP {
     }
     
     public double distTo(int v) {
-//        double res = 0;
-//        for (double weight : distTo) {
-//            res += weight;
-//        }
-//        return res;
         return distTo[v];
     }
     

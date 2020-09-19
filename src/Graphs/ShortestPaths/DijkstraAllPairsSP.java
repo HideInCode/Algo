@@ -2,6 +2,7 @@ package Graphs.ShortestPaths;
 
 /**
  * 任意顶点对之间的最短路径
+ * 保存图的每个顶点为起点的查找数组,直接查找任意两个顶点的路径以及距离.
  */
 public class DijkstraAllPairsSP {
 
@@ -22,7 +23,5 @@ public class DijkstraAllPairsSP {
         return all[s].distTo(t);
     }
     
-    public static void main(String[] args) {
-        System.out.println(Double.POSITIVE_INFINITY+Double.POSITIVE_INFINITY);
-    }
+
 }
