@@ -7,72 +7,60 @@ package Strings.search;
  * 复杂度:时间O(txt.length+pat.length) 空间:O(R*pat.length)
  */
 public class KMP {
-    private int R = 256;// 当前字符集字符个数
-    private int[][] dfa; //确定有限自动状态机
-    private String pat;//匹配模式
-
-
+    // 当前字符集字符个数
+    private int R = 128;
+    //确定有限状态机,若dfa[i][c]=x 表示:第i个状态遇见字符c时,应该进入状态x
+    private int[][] dfa;
+    private String pat;
+    
     /**
-     * 构造dfa,储存的是状态,也是模式字符串指针下一个移动的位置
-     * 1.匹配失败:此时模式串指到patIndex时,考虑正常回退的情况.
-     * 如果模式指针都回退,文本指针回退后右移再匹配下一位.获取dfa状态.这时的pat[1]到pat[patIndex-1]是已知的.但是我们还要重新扫描一遍.
-     * 因此,我们可以找到pat:1->patIndex-1的dfa的状态,来替换掉当前状态.即initIndex = dfa[patIndex][initIndex],把上一次的转态转移到下一次来
-     * 2.匹配成功:就是开始匹配pat串的下一位即dfa[c][patIndex] = patIndex+1
+     * 根据输入的pat个数,确定有几种状态;
+     * 然后对于当前状态遇到字符集的每一个字符该如何选择:进入下一状态还是回退?
+     * 如果回退,回退到哪里合适???
+     * 用x表示上一次该字符出现时要转移到哪个状态
      *
-     * @param pat 匹配模式串
+     * @param pat
      */
     public KMP(String pat) {
         this.pat = pat;
-
-        //开始构造一个dfa 这个算法的核心
-        dfa = new int[R][pat.length()];
-        dfa[pat.charAt(0)][0] = 1;//第一位匹配时,下一状态一定是1
-
-        //两个指针同时开始移动
-        for (int initIndex = 0, patIndex = 1; patIndex < pat.length(); patIndex++) {
-
-            //匹配失败,已经匹配过的状态保留
-            for (int c = 0; c < R; c++) {
-                dfa[c][patIndex] = dfa[c][initIndex];
+        int m = pat.length();
+        dfa = new int[m][R];
+        //遇见第一个模式串开始前进,否则保持在状态0
+        dfa[0][pat.charAt(0)] = 1;
+        //x保留上次出现该字符时的状态
+        int x = 0;
+        for (int i = 1; i < m; i++) {
+            //当前状态遇到字符集任意字符要进入到哪个状态
+            for (int j = 0; j < R; j++) {
+                //把上个状态的情况保留下来
+                dfa[i][j] = dfa[x][j];
             }
-
-            //匹配成功,下个要匹配的模式字符肯定是patIndex+1
-            dfa[pat.charAt(patIndex)][patIndex] = patIndex + 1;
-
-            //更新重启位置,状态转移
-            initIndex = dfa[pat.charAt(patIndex)][initIndex];
-
+            //上个状态保留后,找出推进状态,即遇到哪个字符状态会前进
+            dfa[i][pat.charAt(i)] = i + 1;
+            
+            //有新的x的话即时更新
+            x = dfa[x][pat.charAt(i)];
         }
     }
-
-    /**
-     * 有了dfa提供下个模式指针的位置,一切都简单了
-     *
-     * @param txt 匹配文本
-     * @return 第一匹配到的位置
-     */
+    
+    
     public int search(String txt) {
-        int txtIndex;
-        int patIndex;
-
-        for (txtIndex = 0, patIndex = 0; txtIndex < txt.length() && patIndex < pat.length(); txtIndex++) {
-            //利用自动机来找到下个模式串指针的位置
-            patIndex = dfa[txt.charAt(txtIndex)][patIndex];
-            System.out.println(patIndex);
+        int n = txt.length();
+        int m = this.pat.length();
+        int initStatus = 0;
+        for (int i = 0; i < n; i++) {
+            initStatus = dfa[initStatus][txt.charAt(i)];
+            if (initStatus == m) {
+                return i - m + 1;
+            }
         }
-
-        //模式字符串匹配到结尾,说明找到了
-        if (patIndex == pat.length()) {
-            return txtIndex - patIndex;
-        }
-
         return -1;
     }
-
+    
     public static void main(String[] args) {
         KMP kmp = new KMP("dfa");
-        String txt = "qwerftghjkpoiuytrdasdfaghjm,jhgfdsasdfgh";
-
+        String txt = "adfaghjm,jhgfdsasdfgh";
+        
         int search = kmp.search(txt);
         System.out.println(search);
     }

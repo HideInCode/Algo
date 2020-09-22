@@ -48,7 +48,8 @@ public class SimpleSearch {
         for (txtIndex = 0, patIndex = 0; txtIndex < N && patIndex < M; txtIndex++) {
             if (txt.charAt(txtIndex) == pat.charAt(patIndex)) {
                 patIndex++;
-            } else {//如果不匹配,文本下标回到模式串的开头,然后模式串归零
+            } else {
+                //统一回退指针
                 txtIndex -= patIndex;
                 patIndex = 0;
             }
