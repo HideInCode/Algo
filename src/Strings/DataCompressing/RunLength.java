@@ -4,7 +4,7 @@ import Strings.DataCompressing.BinaryUtils.BinaryStdIn;
 import Strings.DataCompressing.BinaryUtils.BinaryStdOut;
 
 /**
- * 游程编码,解决重复长串的问题,广泛用于位图,分辨率越高,压缩率越低.
+ * 游程编码,解决重复字符长串的问题,广泛用于位图,分辨率越高,压缩率越低.
  * 思想: 把重复串长度编码,如00000变成5,然后确定5用多少位表示
  * 数据结构:二进制输入输出流
  * 算法流程:
@@ -23,8 +23,8 @@ public class RunLength {
         while (!BinaryStdIn.isEmpty()) {
             char c = BinaryStdIn.readChar();
             for (int i = 0; i < c; i++) {
+                //false写0 true写1
                 BinaryStdOut.write(flag);
-                
             }
             flag = !flag;
         }
@@ -34,10 +34,13 @@ public class RunLength {
     
     public static void compress() {
         char count = 0;
-        boolean flag = false;
+        boolean b;
+        
+        //数据已0开头,所以默认是false
         boolean old = false;
         while (!BinaryStdIn.isEmpty()) {
-            boolean b = BinaryStdIn.readBoolean();
+            //读到1时是true
+            b = BinaryStdIn.readBoolean();
             if (b != old) {
                 BinaryStdOut.write(count);
                 count = 0;
@@ -55,6 +58,16 @@ public class RunLength {
         
         BinaryStdOut.write(count);
         BinaryStdOut.close();
+    }
+    //0000 0000 0000 000 1111111 000000011111111111
+    public static void main(String[] args) {
+        if (args[0].equals("-")) {
+            compress();
+        }
+        
+        if (args[0].equals("+")) {
+            expand();
+        }
     }
 }
 

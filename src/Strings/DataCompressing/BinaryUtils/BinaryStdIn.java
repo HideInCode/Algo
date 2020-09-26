@@ -1,3 +1,14 @@
+/******************************************************************************
+ *  Compilation:  javac BinaryStdIn.java
+ *  Execution:    java BinaryStdIn < input > output
+ *  Dependencies: none
+ *
+ *  Supports reading binary data from standard input.
+ *
+ *  % java BinaryStdIn < input.jpg > output.jpg
+ *  % diff input.jpg output.jpg
+ *
+ ******************************************************************************/
 package Strings.DataCompressing.BinaryUtils;
 
 import java.io.BufferedInputStream;
@@ -5,18 +16,25 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 
 /**
- * 可以处理单个bit
- * <p>
- * 利用系统输入, 如重定向< test.txt
- * <p>
- * &0xFF -> 0000 0000 1111 1111,0根据位数添加的意义:
- * 负数=正数取反+1,俗称正数的补码
- * 任何数与0进行&运算都会变成0
- * byte->int会自动在高位补全1111,进行&0xff运算后,高位重置为0,地位不变,从而保证了二进制补码的一致性.
- * <p>
- * byte转成高位类型(char,int)要注意保持补码一致性.
+ *  <i>Binary standard input</i>. This class provides methods for reading
+ *  in bits from standard input, either one bit at a time (as a {@code boolean}),
+ *  8 bits at a time (as a {@code byte} or {@code char}),
+ *  16 bits at a time (as a {@code short}), 32 bits at a time
+ *  (as an {@code int} or {@code float}), or 64 bits at a time (as a
+ *  {@code double} or {@code long}).
+ *  <p>
+ *  All primitive types are assumed to be represented using their
+ *  standard Java representations, in big-endian (most significant
+ *  byte first) order.
+ *  <p>
+ *  The client should not intermix calls to {@code BinaryStdIn} with calls
+ *  to {@code StdIn} or {@code System.in};
+ *  otherwise unexpected behavior will result.
+ *
+ *  @author Robert Sedgewick
+ *  @author Kevin Wayne
  */
-public class BinaryStdIn {
+public final class BinaryStdIn {
     private static final int EOF = -1;      // end of file
     
     private static BufferedInputStream in;  // input stream
@@ -25,8 +43,7 @@ public class BinaryStdIn {
     private static boolean isInitialized;   // has BinaryStdIn been called for first time?
     
     // don't instantiate
-    private BinaryStdIn() {
-    }
+    private BinaryStdIn() { }
     
     // fill buffer
     private static void initialize() {
@@ -41,7 +58,8 @@ public class BinaryStdIn {
         try {
             buffer = in.read();
             n = 8;
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             System.out.println("EOF");
             buffer = EOF;
             n = -1;
@@ -56,14 +74,14 @@ public class BinaryStdIn {
         try {
             in.close();
             isInitialized = false;
-        } catch (IOException ioe) {
+        }
+        catch (IOException ioe) {
             throw new IllegalStateException("Could not close BinaryStdIn", ioe);
         }
     }
     
     /**
      * Returns true if standard input is empty.
-     *
      * @return true if and only if standard input is empty
      */
     public static boolean isEmpty() {
@@ -80,8 +98,6 @@ public class BinaryStdIn {
     public static boolean readBoolean() {
         if (isEmpty()) throw new NoSuchElementException("Reading from empty input stream");
         n--;
-        
-        //读一个bit并检查是否是1
         boolean bit = ((buffer >> n) & 1) == 1;
         if (n == 0) fillBuffer();
         return bit;
@@ -119,11 +135,11 @@ public class BinaryStdIn {
     }
     
     /**
-     * Reads the next r bits from standard input and return as an r-bit character.
+     * Reads the next <em>r</em> bits from standard input and return as an <em>r</em>-bit character.
      *
-     * @param r number of bits to read.
+     * @param  r number of bits to read.
      * @return the next r bits of data from standard input as a {@code char}
-     * @throws NoSuchElementException   if there are fewer than {@code r} bits available on standard input
+     * @throws NoSuchElementException if there are fewer than {@code r} bits available on standard input
      * @throws IllegalArgumentException unless {@code 1 <= r <= 16}
      */
     public static char readChar(int r) {
@@ -146,7 +162,7 @@ public class BinaryStdIn {
      *
      * @return the remaining bytes of data from standard input as a {@code String}
      * @throws NoSuchElementException if standard input is empty or if the number of bits
-     *                                available on standard input is not a multiple of 8 (byte-aligned)
+     *         available on standard input is not a multiple of 8 (byte-aligned)
      */
     public static String readString() {
         if (isEmpty()) throw new NoSuchElementException("Reading from empty input stream");
@@ -193,11 +209,11 @@ public class BinaryStdIn {
     }
     
     /**
-     * Reads the next r bits from standard input and return as an r-bit int.
+     * Reads the next <em>r</em> bits from standard input and return as an <em>r</em>-bit int.
      *
-     * @param r number of bits to read.
+     * @param  r number of bits to read.
      * @return the next r bits of data from standard input as a {@code int}
-     * @throws NoSuchElementException   if there are fewer than {@code r} bits available on standard input
+     * @throws NoSuchElementException if there are fewer than {@code r} bits available on standard input
      * @throws IllegalArgumentException unless {@code 1 <= r <= 32}
      */
     public static int readInt(int r) {
@@ -273,10 +289,36 @@ public class BinaryStdIn {
     public static void main(String[] args) {
         
         // read one 8-bit char at a time
-        while (!BinaryStdIn.isEmpty()) {
-            char c = BinaryStdIn.readChar();
-            BinaryStdOut.write(c);
-        }
-        BinaryStdOut.flush();
+//        char c = BinaryStdIn.readChar();
+//        BinaryStdOut.write(c);
+//        BinaryStdOut.flush();
+        boolean b = BinaryStdIn.readBoolean();
+        System.out.println(b);
+        
+    
     }
 }
+
+/******************************************************************************
+ *  Copyright 2002-2020, Robert Sedgewick and Kevin Wayne.
+ *
+ *  This file is part of algs4.jar, which accompanies the textbook
+ *
+ *      Algorithms, 4th edition by Robert Sedgewick and Kevin Wayne,
+ *      Addison-Wesley Professional, 2011, ISBN 0-321-57351-X.
+ *      http://algs4.cs.princeton.edu
+ *
+ *
+ *  algs4.jar is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  algs4.jar is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with algs4.jar.  If not, see http://www.gnu.org/licenses.
+ ******************************************************************************/

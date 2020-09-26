@@ -8,6 +8,7 @@ import Strings.DataCompressing.BinaryUtils.BinaryStdOut;
  * 霍夫曼树
  * 出现频率高的用更少的bit
  * 关键是要找到前缀码
+ * 前缀码自然使用trie,只用叶子结点存值的话,每个值就不存在前缀.
  */
 public class Huffman {
     //所用字符集的字符个数
@@ -47,8 +48,8 @@ public class Huffman {
     
     /**
      * 使用前缀码展开
-     * 遇到0往左,遇到1;
-     * 匹配到叶子结点(没有子节点)就回到根节点
+     * 对于输入的二进制,遇到0往左,遇到1往右,找叶子结点;
+     * 匹配到叶子结点就把叶子结点的值写出
      */
     public static void expand() {
         Node root = readTrie();
@@ -169,8 +170,8 @@ public class Huffman {
         
         //统计频率
         int[] freq = new int[R];
-        for (int i = 0; i < input.length; i++) {
-            freq[input[i]]++;
+        for (char value : input) {
+            freq[value]++;
         }
         
         //构造huffman树
@@ -187,8 +188,8 @@ public class Huffman {
         BinaryStdOut.write(input.length);
         
         //使用霍夫曼编码处理
-        for (int i = 0; i < input.length; i++) {
-            String code = st[input[i]];
+        for (char c : input) {
+            String code = st[c];
             for (int j = 0; j < code.length(); j++) {
                 if (code.charAt(j) == '1') {
                     BinaryStdOut.write(true);
@@ -199,5 +200,8 @@ public class Huffman {
         }
         
         BinaryStdOut.close();
+    }
+    public static void main(String[] args){
+    
     }
 }
