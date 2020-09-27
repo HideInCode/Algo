@@ -13,7 +13,7 @@ public class LZW {
     private static final int R = 256;
     
     //编码总数=2^12
-    private static final int L = 2096;
+    private static final int L = 4096;
     
     //编码宽度
     private static final int W = 12;
@@ -26,7 +26,7 @@ public class LZW {
             st.put("" + ((char) i), i);
         }
         
-        //R为文件结束(EOF)的编码
+        //R为文件结束(EOF)的编码,所以从R+1开始记录新的字符
         int code = R + 1;
         
         while (input.length() > 0) {
@@ -50,32 +50,26 @@ public class LZW {
     
     public static void expand() {
         String[] st = new String[L];
-        
-        //下一个待补全的编码值
         int i;
-        
-        //初始化字符编译表
+        //初始化表,并把i挪到字母表最后一位.
         for (i = 0; i < R; i++) {
             st[i] = "" + ((char) i);
         }
-        
-        //文件结束标记的前瞻字符
         st[i++] = " ";
-        
-        int codeword = BinaryStdIn.readInt(W);
-        String val = st[codeword];
-        
+        //根据长度读第一个字符串编码,对应压缩的字符
+        int wordCode = BinaryStdIn.readInt(W);
+        String val = st[wordCode];
+    
         while (true) {
             BinaryStdOut.write(val);
-            codeword = -BinaryStdIn.readInt(W);
-            
-            if (codeword == R) {
+            wordCode = BinaryStdIn.readInt(W);
+            //已经用完...
+            if (wordCode == R) {
                 break;
             }
-            
-            String s = st[codeword];
-            
-            if (i == codeword) {
+            String s = st[wordCode];
+            //下个字符不可用,在表中生成新的编码对应字符
+            if (i == wordCode) {
                 s = val + val.charAt(0);
             }
             if (i < L) {
@@ -84,6 +78,14 @@ public class LZW {
             val = s;
         }
         BinaryStdOut.close();
-        
+    }
+    public static void main(String[] args){
+        if (args[0].equals("-")) {
+            compress();
+        }
+    
+        if (args[0].equals("+")) {
+            expand();
+        }
     }
 }

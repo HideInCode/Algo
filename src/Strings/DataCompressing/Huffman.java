@@ -142,7 +142,7 @@ public class Huffman {
             }
         }
         
-        
+        //化森林为树的技巧
         while (pq.size() > 1) {
             Node x = pq.delMin();
             Node y = pq.delMin();
@@ -202,6 +202,12 @@ public class Huffman {
         BinaryStdOut.close();
     }
     public static void main(String[] args){
+        if (args[0].equals("-")) {
+            compress();
+        }
     
+        if (args[0].equals("+")) {
+            expand();
+        }
     }
 }
